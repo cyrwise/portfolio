@@ -1,0 +1,71 @@
+/* Skills.css */
+.skills-container {
+    padding: 2rem;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #050816;
+  }
+  
+  .skills-title {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: white;
+  }
+  
+  .categories-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    flex-wrap: wrap;
+    max-width: 1200px;
+  }
+  
+  .category-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+  
+  .category-bag {
+    padding: 1.5rem 2.5rem;
+    font-size: 1.5rem;
+    border-radius: 1rem;
+    background: #1d1836;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+  }
+  
+  .skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .skill-name {
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+  }
+  
+  .sphere-container {
+    width: 112px;
+    height: 112px;
+    cursor: pointer;
+  }
+  

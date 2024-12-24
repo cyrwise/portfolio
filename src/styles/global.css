@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: #010f18;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+  }
+  
+  .text-gradient {
+    background: linear-gradient(45deg, #7accfe, #4ecdc4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
