@@ -1,40 +1,39 @@
 import { useEffect, useRef, useState } from 'react'
-import NET from 'vanta/dist/vanta.net.min'
-import * as THREE from 'three'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Points, PointMaterial } from '@react-three/drei'
+import * as random from 'maath/random'
 import { motion } from 'framer-motion'
 import './Hero.css'
 
+function ParticleField() {
+  const points = useRef()
+  const [sphere] = useState(() => 
+    random.inSphere(new Float32Array(900), { radius: 3.5 })
+  )
+
+  useFrame(() => {
+    points.current.rotation.x += 0.0001
+    points.current.rotation.y += 0.0001
+  })
+
+  return (
+    <group rotation={[0, 0, Math.PI / 4]}>
+      <Points ref={points} positions={sphere} stride={3}>
+        <PointMaterial
+          transparent
+          color="#f5e6d3"  // Beige color that matches the portfolio theme
+          size={0.025}
+          sizeAttenuation={true}
+          depthWrite={false}
+          opacity={0.8}    // Added slight transparency for depth effect
+        />
+      </Points>
+    </group>
+  )
+}
+
+
 function Hero() {
-  const [vantaEffect, setVantaEffect] = useState(null)
-  const heroRef = useRef(null)
-  
-  useEffect(() => {
-    if (!vantaEffect) {
-      const effect = NET({
-        el: heroRef.current,
-        THREE: THREE,
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: window.innerHeight,
-        minWidth: window.innerWidth,
-        scale: 1.00,
-        scaleMobile: 1.00,
-        color: 0xfffff,
-        backgroundColor: 0x001018,
-        points: 12.00,
-        maxDistance: 25.00,
-        spacing: 16.00,
-        showDots: false
-      })
-
-      setVantaEffect(effect)
-    }
-    return () => {
-      if (vantaEffect) vantaEffect.destroy()
-    }
-  }, [vantaEffect])
-
   const description = "A passionate full-stack developer crafting digital experiences"
   const [displayText, setDisplayText] = useState("")
   const [index, setIndex] = useState(0)
@@ -48,12 +47,22 @@ function Hero() {
       return () => clearTimeout(timer)
     }
   }, [index, description])
-  
+
   return (
-    <section 
-      ref={heroRef} 
-      className="hero-container"
-    >
+    <section className="hero-container">
+      <Canvas 
+        camera={{ position: [0, 0, 3], fov: 75 }}
+        style={{ 
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          width: '100%', 
+          height: '100%',
+          background: '#001018'
+        }}
+      >
+        <ParticleField />
+      </Canvas>
       <motion.div 
         className="hero-content"
         initial={{ opacity: 0, y: 20 }}
@@ -61,28 +70,32 @@ function Hero() {
         transition={{ duration: 0.8 }}
       >
         <h1 className="hero-title">
-          <span className="hero-greeting">Hello, I'm </span>
-          <span className="hero-name">Cyrus</span>
+          Hello, I'm <span className="hero-name">Cyrus</span>
         </h1>
-
-        <motion.p 
-          className="hero-description"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <motion.p className="hero-description">
           {displayText}
           <motion.span
             className="cursor"
             animate={{ opacity: [1, 0] }}
             transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-          >
-            |
-          </motion.span>
+          >|</motion.span>
         </motion.p>
+      </motion.div>
+      <motion.div 
+        className="portrait-container"
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.3 }}
+      >
+        <div className="portrait-wrapper">
+          <div className="portrait-glow"></div>
+          <img src="/Cyrus-Wise.jpg" alt="Portrait" className="portrait-image" />
+        </div>
       </motion.div>
     </section>
   )
 }
+
+
 
 export default Hero
