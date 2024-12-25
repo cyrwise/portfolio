@@ -1,29 +1,55 @@
-import { motion, AnimatePresence } from 'framer-motion';
+// Contact.jsx
+import { motion } from 'framer-motion';
 import { useState } from 'react';
+import './Contact.css';
 
 function ContactCard({ method, icon, link, flipped, onClick }) {
   return (
-    <motion.div
-      className="w-64 h-96 relative cursor-pointer"
-      onClick={onClick}
-      initial={false}
-      animate={{ rotateY: flipped ? 180 : 0 }}
-      transition={{ duration: 0.6 }}
-      style={{ transformStyle: 'preserve-3d' }}
-    >
-      <div className="absolute w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-6 backface-hidden">
-        <div className="text-4xl mb-4">{icon}</div>
-        <h3 className="text-2xl font-bold text-white">{method}</h3>
-      </div>
-      <div 
-        className="absolute w-full h-full bg-white rounded-xl p-6 backface-hidden"
-        style={{ transform: 'rotateY(180deg)' }}
+    <div className="card-container">
+      <motion.div
+        className="w-64 h-96 relative cursor-pointer"
+        onClick={onClick}
+        initial={false}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.6 }}
+        style={{ transformStyle: 'preserve-3d' }}
       >
-        <a href={link} className="text-blue-600 hover:text-blue-800">
-          Connect with me
-        </a>
-      </div>
-    </motion.div>
+        {/* Initial visible side - Playing card pattern */}
+        <div 
+          className="absolute w-full h-full rounded-xl overflow-hidden"
+          style={{ backfaceVisibility: 'hidden' }}
+        >
+          <img 
+            src="src/assets/images/CardBack.png"
+            alt="Card Back"
+            className="interactive w-full h-full object-cover"
+          />
+        </div>
+        
+        {/* Flipped side - Gradient with content */}
+        <div 
+          className="absolute w-full h-full rounded-xl overflow-hidden interactive"
+          style={{ 
+            backfaceVisibility: 'hidden',
+            transform: 'rotateY(180deg)',
+          }}
+        >
+          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 p-6 flex flex-col items-center justify-center">
+            <div className="text-4xl mb-4">{icon}</div>
+            <h3 className="text-2xl font-bold text-white">{method}</h3>
+            <div 
+              className="mt-4 cursor-pointer hover:underline text-white interactive"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(link, '_blank');
+              }}
+            >
+              Connect on {method}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 

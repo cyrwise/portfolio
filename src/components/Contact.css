@@ -1,0 +1,80 @@
+/* Contact.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #001018;
+    color: white;
+  }
+  
+  section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .card-container {
+    perspective: 1000px;
+    width: 256px;
+    height: 384px;
+  }
+  
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card-front {
+    background: linear-gradient(to bottom right, #4facfe, #00f2fe);
+    color: white;
+    flex-direction: column;
+  }
+  
+  .card-back {
+    background: white;
+    color: #001018;
+    transform: rotateY(180deg);
+  }
+  
+  .card-back a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .card-back a:hover {
+    text-decoration: underline;
+  }
+  
+  img, .card-container img {
+    pointer-events: none;
+  }
+  
+  .card-container img,
+  .card-container .absolute {
+    cursor: none !important;
+  }
+  

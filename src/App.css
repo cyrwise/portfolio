@@ -19,3 +19,17 @@ body {
   margin-top: 4rem;
   padding: 0 1rem;
 }
+
+/* Hide default cursor on all interactive elements */
+img, 
+canvas, 
+.three-canvas,
+.interactive,
+.model-viewer {
+  cursor: none !important;
+}
+
+/* Ensure body also has no cursor */
+body {
+  cursor: none !important;
+}
