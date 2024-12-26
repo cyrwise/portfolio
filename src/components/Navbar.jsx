@@ -1,3 +1,4 @@
+// Navbar.jsx
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
@@ -9,18 +10,23 @@ function Navbar() {
   const fullText = "Cyrus Wise";
   
   useEffect(() => {
+    setDisplayText(""); // Reset text when component mounts
     let index = 0;
+    
     const timer = setInterval(() => {
       if (index < fullText.length) {
-        setDisplayText(prev => prev + fullText[index]);
+        setDisplayText(fullText.substring(0, index + 1));
         index++;
       } else {
         clearInterval(timer);
       }
-    }, 100);
+    }, 65);
 
-    return () => clearInterval(timer);
-  }, []);
+    return () => {
+      clearInterval(timer);
+      setDisplayText(fullText); // Ensure full text is displayed on cleanup
+    };
+  }, [location.pathname]); // Re-run animation when route changes
 
   const navItems = [
     { name: 'Home', path: '/' },
@@ -32,13 +38,17 @@ function Navbar() {
 
   return (
     <motion.nav 
-    initial={{ y: -100 }}
-    animate={{ y: 0 }}
-    className="fixed w-full z-40 top-0 bg-[#0F1626]/90 backdrop-blur-md border-b border-white/10"
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className="fixed w-full z-40 top-0 bg-[#0F1626]/90 backdrop-blur-md border-b border-white/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-2xl font-bold">
+          <Link 
+            to="/" 
+            className="text-2xl font-bold"
+            onClick={() => setDisplayText("")} // Reset text on logo click
+          >
             <span className="text-coral">{displayText}</span>
             <span className="animate-blink text-coral">_</span>
           </Link>

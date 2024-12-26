@@ -12,6 +12,14 @@ import Resume from './components/Resume';
 import CustomScrollbar from './components/CustomScrollbar';
 import './App.css';
 
+// Font Awesome imports
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import '@fortawesome/fontawesome-svg-core/styles.css';
+
+library.add(fas, fab);
+
 function App() {
   return (
     <CustomScrollbar>
