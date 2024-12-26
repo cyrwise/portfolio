@@ -1,57 +1,14 @@
-// Skills.jsx
-import React, { Suspense, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Decal, Float, OrbitControls, Preload, useTexture } from "@react-three/drei";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import CanvasLoader from "./Loader";
+import { BallCanvas } from "./Ball";
 import './Skills.css';
 
 // Import logos
 import reactLogo from '/src/assets/images/skills/react-logo.png';
 import jsLogo from '/src/assets/images/skills/javascript-logo.png';
 import nodeLogo from '/src/assets/images/skills/nodejs-logo.png';
+import dockerLogo from '/src/assets/images/skills/docker-logo.png';
 
-const Ball = ({ icon }) => {
-  const [decal] = useTexture([icon]);
-
-  return (
-    <Float speed={1.75} rotationIntensity={1} floatIntensity={2}>
-      <ambientLight intensity={0.25} />
-      <directionalLight position={[0, 0, 0.05]} />
-      <mesh castShadow receiveShadow>
-        <icosahedronGeometry args={[1, 1]} />
-        <meshStandardMaterial
-          color='#fff8eb'
-          polygonOffset
-          polygonOffsetFactor={-5}
-          flatShading
-        />
-        <Decal
-          position={[0, 0, 1]}
-          rotation={[2 * Math.PI, 0, 6.25]}
-          scale={1}
-          map={decal}
-          flatShading
-        />
-      </mesh>
-    </Float>
-  );
-};
-
-const BallCanvas = ({ icon }) => {
-  return (
-    <Canvas
-      frameloop='demand'
-      gl={{ preserveDrawingBuffer: true }}
-    >
-      <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls enableZoom={false} />
-        <Ball icon={icon} />
-      </Suspense>
-      <Preload all />
-    </Canvas>
-  );
-};
 
 const SkillCategory = ({ title, skills }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -74,10 +31,7 @@ const SkillCategory = ({ title, skills }) => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ 
-              duration: 0.5,
-              staggerChildren: 0.1
-            }}
+            transition={{ duration: 0.5, staggerChildren: 0.1 }}
           >
             {skills.map((skill, index) => (
               <motion.div
@@ -93,7 +47,11 @@ const SkillCategory = ({ title, skills }) => {
               >
                 <span className="skill-name">{skill.name}</span>
                 <div className="sphere-container">
-                  <BallCanvas icon={skill.icon} />
+                  <BallCanvas 
+                    icon={skill.icon}
+                    index={index}
+                    total={skills.length}
+                  />
                 </div>
               </motion.div>
             ))}
@@ -109,14 +67,12 @@ function Skills() {
     Frontend: [
       { name: "React", icon: reactLogo },
       { name: "JavaScript", icon: jsLogo },
-      // Add more frontend skills
     ],
     Backend: [
       { name: "Node.js", icon: nodeLogo },
-      // Add more backend skills
     ],
     "Machine Learning": [
-      // Add ML skills
+      { name: "Docker", icon: dockerLogo },
     ]
   };
 

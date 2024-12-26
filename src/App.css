@@ -8,6 +8,7 @@ body {
   overflow-x: hidden;
   background: #050816;
   min-height: 100vh;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 #root {

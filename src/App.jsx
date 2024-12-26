@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AnimatedCursor from "react-animated-cursor";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import Experience from './components/Experience';
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -38,14 +39,27 @@ function App() {
         />
         <Navbar />
         <Routes>
-          <Route path="/" element={<Hero />} />
-          <Route path="/home" element={<Hero />} />
+          <Route path="/" element={
+            <>
+              <Hero />
+              <Experience />
+              <Projects />
+              <Skills />
+            </>
+          } />
+          <Route path="/home" element={
+            <>
+              <Hero />
+              <Experience />
+              <Projects />
+              <Skills />
+            </>
+          } />
           <Route path="/projects" element={<Projects />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/resume" element={<Resume />} />
         </Routes>
-
       </div>
     </Router>
   );

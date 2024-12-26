@@ -8,7 +8,7 @@ import './Hero.css'
 function ParticleField() {
   const points = useRef()
   const [sphere] = useState(() => 
-    random.inSphere(new Float32Array(900), { radius: 3.5 })
+    random.inSphere(new Float32Array(11900), { radius: 5.5 })
   )
 
   useFrame(() => {
@@ -31,7 +31,6 @@ function ParticleField() {
     </group>
   )
 }
-
 
 function Hero() {
   const description = "A passionate full-stack developer crafting digital experiences"
@@ -95,7 +94,5 @@ function Hero() {
     </section>
   )
 }
-
-
 
 export default Hero
