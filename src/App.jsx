@@ -9,10 +9,12 @@ import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Resume from './components/Resume';
+import CustomScrollbar from './components/CustomScrollbar';
 import './App.css';
 
 function App() {
   return (
+    <CustomScrollbar>
     <Router>
       <div className="min-h-screen bg-[#001018]">
         <AnimatedCursor
@@ -62,6 +64,7 @@ function App() {
         </Routes>
       </div>
     </Router>
+    </CustomScrollbar>
   );
 }
 

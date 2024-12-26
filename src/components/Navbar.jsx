@@ -1,31 +1,46 @@
-// Navbar.jsx
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import './Navbar.css';
 
 function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [displayText, setDisplayText] = useState("");
+  const fullText = "Cyrus Wise";
+  
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      if (index < fullText.length) {
+        setDisplayText(prev => prev + fullText[index]);
+        index++;
+      } else {
+        clearInterval(timer);
+      }
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Projects', path: '/projects' },
     { name: 'Skills', path: '/skills' },
     { name: 'Contact', path: '/contact' },
-    { name: 'Resume', path: '/resume' }  // Add this line
+    { name: 'Resume', path: '/resume' }
   ];
-  
 
   return (
     <motion.nav 
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="fixed w-full z-50 top-0 bg-[rgba(13,12,34,0.8)] backdrop-blur-md border-b border-white/10"
+    initial={{ y: -100 }}
+    animate={{ y: 0 }}
+    className="fixed w-full z-40 top-0 bg-[#0F1626]/90 backdrop-blur-md border-b border-white/10"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="text-2xl font-bold bg-gradient-to-r from-red-500 to-[#F5F5DC] bg-clip-text text-transparent">
-            Portfolio
+          <Link to="/" className="text-2xl font-bold">
+            <span className="text-coral">{displayText}</span>
+            <span className="animate-blink text-coral">_</span>
           </Link>
           
           <div className="hidden sm:flex space-x-8">
@@ -36,13 +51,21 @@ function Navbar() {
                 className="relative group"
               >
                 <span className={`${
-                  currentPath === path ? 'text-white' : 'text-gray-300'
-                } hover:text-white transition-colors`}>
+                  currentPath === path ? 'text-coral' : 'text-gray-300'
+                } hover:text-coral transition-colors duration-300`}>
                   {name}
                 </span>
-                <span className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-red-500 to-[#F5F5DC] transition-all duration-300 ${
-                  currentPath === path ? 'w-full' : 'w-0 group-hover:w-full'
-                }`} />
+                <span className="absolute -bottom-1 left-0 w-full h-0.5 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left">
+                  <svg width="100%" height="3" viewBox="0 0 100 3" preserveAspectRatio="none">
+                    <path 
+                      d="M0,1 Q25,0 50,1 T100,1"
+                      stroke="white"
+                      strokeWidth="2"
+                      fill="none"
+                      className="group-hover:animate-wave"
+                    />
+                  </svg>
+                </span>
               </Link>
             ))}
           </div>

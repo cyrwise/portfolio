@@ -1,8 +1,10 @@
+// Hero.jsx
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Points, PointMaterial } from '@react-three/drei'
 import * as random from 'maath/random'
 import { motion } from 'framer-motion'
+import AsciiPortrait from './AsciiPortrait'
 import './Hero.css'
 
 function ParticleField() {
@@ -21,11 +23,11 @@ function ParticleField() {
       <Points ref={points} positions={sphere} stride={3}>
         <PointMaterial
           transparent
-          color="#f5e6d3"  // Beige color that matches the portfolio theme
+          color='#333333'
           size={0.025}
           sizeAttenuation={true}
           depthWrite={false}
-          opacity={0.8}    // Added slight transparency for depth effect
+          opacity={0.8}
         />
       </Points>
     </group>
@@ -49,6 +51,17 @@ function Hero() {
 
   return (
     <section className="hero-container">
+      <div 
+        style={{ 
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#f5f5f5',
+          zIndex: 1
+        }}
+      />
       <Canvas 
         camera={{ position: [0, 0, 3], fov: 75 }}
         style={{ 
@@ -57,40 +70,43 @@ function Hero() {
           left: 0, 
           width: '100%', 
           height: '100%',
-          background: '#001018'
+          zIndex: 2
         }}
       >
         <ParticleField />
       </Canvas>
-      <motion.div 
-        className="hero-content"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <h1 className="hero-title">
-          Hello, I'm <span className="hero-name">Cyrus</span>
-        </h1>
-        <motion.p className="hero-description">
-          {displayText}
-          <motion.span
-            className="cursor"
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-          >|</motion.span>
-        </motion.p>
-      </motion.div>
-      <motion.div 
-        className="portrait-container"
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-      >
-        <div className="portrait-wrapper">
-          <div className="portrait-glow"></div>
-          <img src="/Cyrus-Wise.jpg" alt="Portrait" className="portrait-image" />
-        </div>
-      </motion.div>
+      <div className="hero-content-wrapper">
+        <motion.div 
+          className="hero-text-content"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          style={{ zIndex: 3 }}
+        >
+          <h1 className="hero-title">
+            Hello, I'm <span className="hero-name">Cyrus</span>
+          </h1>
+          <motion.p className="hero-description">
+            {displayText}
+            <motion.span
+              className="cursor"
+              animate={{ opacity: [1, 0] }}
+              transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+            >|</motion.span>
+          </motion.p>
+        </motion.div>
+        <motion.div 
+          className="portrait-container"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          style={{ zIndex: 3 }}
+        >
+          <div className="portrait-wrapper">
+            <AsciiPortrait />
+          </div>
+        </motion.div>
+      </div>
     </section>
   )
 }

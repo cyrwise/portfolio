@@ -6,7 +6,7 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background: #050816;
+  background: #f5f5f5;  /* Light gray background */
   min-height: 100vh;
   font-family: 'Space Grotesk', sans-serif;
 }
@@ -33,4 +33,13 @@ canvas,
 /* Ensure body also has no cursor */
 body {
   cursor: none !important;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0F1626 transparent;
+}
+
+*:hover {
+  scrollbar-color: #FF533D transparent;
 }

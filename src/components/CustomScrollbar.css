@@ -1,0 +1,22 @@
+.custom-scrollbar-container {
+    @apply h-screen overflow-y-scroll;
+  }
+  
+  .custom-scrollbar-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .custom-scrollbar-container::-webkit-scrollbar-thumb {
+    background-color: #0F1626;
+    border-radius: 4px;
+  }
+  
+  .custom-scrollbar-container {
+    scrollbar-width: thin;
+    scrollbar-color: #0F1626 transparent;
+  }
+  
