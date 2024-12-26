@@ -8,42 +8,10 @@ const Experience = () => {
       
       <div className="space-y-6">
         <ExperienceItem 
-          company="Cisco Meraki"
-          logo="/meraki-logo.png"
-          role="Meraki Vision Platform Firmware"
-          date="Sept. 2024 - Dec. 2024"
-          className="border-l-[#FF533D]"
-        />
-        
-        <ExperienceItem 
-          company="NVIDIA"
-          logo="/nvidia-logo.png"
-          role="Distributed Hardware Testing Infrastructure"
-          date="Jun 2024 - Sep 2024"
-          className="border-l-[#A5997A]"
-        />
-        
-        <ExperienceItem 
-          company="Cal Poly"
-          logo="/calPoly-logo.png"
-          role="Research, Artificial Intelligence"
-          date="Nov 2023 - Apr. 2024"
-          className="border-l-[#0F1626]"
-        />
-        
-        <ExperienceItem 
-          company="DeepWater Exploration"
-          logo="/dw-logo.png"
-          role="Firmware & Applications"
-          date="May 2023 - Oct 2023"
-          className="border-l-[#F5F5F5]"
-        />
-        
-        <ExperienceItem 
-          company="omegaUp"
-          logo="/omega-logo.png"
-          role="Software Engineering"
-          date="Jun. 2020 - Aug 2020"
+          company=".."
+          logo="/s-logo.png"
+          role="."
+          date="."
           className="border-l-[#FF533D]"
         />
       </div>
