@@ -7,25 +7,34 @@ function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
   const [displayText, setDisplayText] = useState("");
+  const [hasAnimated, setHasAnimated] = useState(false);
   const fullText = "Cyrus Wise";
   
   useEffect(() => {
-    setDisplayText(""); // Reset text when component mounts
-    let index = 0;
-    
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setDisplayText(fullText.substring(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 65);
+    if (!hasAnimated) {
+      setDisplayText(""); // Only reset text on initial mount
+      let index = 0;
+      
+      const timer = setInterval(() => {
+        if (index < fullText.length) {
+          setDisplayText(fullText.substring(0, index + 1));
+          index++;
+        } else {
+          clearInterval(timer);
+          setHasAnimated(true);
+        }
+      }, 65);
 
-    return () => {
-      clearInterval(timer);
-      setDisplayText(fullText); // Ensure full text is displayed on cleanup
-    };
+      return () => {
+        clearInterval(timer);
+        setDisplayText(fullText);
+      };
+    }
+  }, [hasAnimated, fullText]);
+
+  // Reset animation state when pathname changes
+  useEffect(() => {
+    setHasAnimated(false);
   }, [location.pathname]); // Re-run animation when route changes
 
   const navItems = [
@@ -47,7 +56,7 @@ function Navbar() {
           <Link 
             to="/" 
             className="text-2xl font-bold"
-            onClick={() => setDisplayText("")} // Reset text on logo click
+            // Remove onClick handler to prevent text reset
           >
             <span className="text-coral">{displayText}</span>
             <span className="animate-blink text-coral">_</span>

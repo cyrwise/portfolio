@@ -1,9 +1,25 @@
-import React, { Suspense, useRef, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import React, { Suspense, useRef, useState, useEffect, useMemo } from "react";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { OrbitControls, Html, PointerLockControls } from "@react-three/drei";
+import { TextureLoader, DoubleSide, Vector3, MOUSE, TOUCH } from 'three';
 import { Ball } from "./Ball";
-import { Html } from '@react-three/drei';
 import CanvasLoader from "./Loader";
+
+const controlButtonStyle = {
+  position: 'fixed',
+  zIndex: 1000,
+  background: 'rgba(255,83,61,0.2)',
+  border: '1px solid #FF533D',
+  color: '#FF533D',
+  padding: '4px 8px',
+  borderRadius: '4px',
+  cursor: 'pointer',
+  fontFamily: 'monospace',
+  fontSize: '12px',
+  touchAction: 'none',
+  userSelect: 'none'
+};
+
 
 const Label = ({ text, position }) => (
   <Html position={position}>
@@ -25,18 +41,48 @@ const Label = ({ text, position }) => (
 const SkillLabel = ({ text, position }) => (
   <Html position={position}>
     <div style={{
+      background: 'rgba(0,0,0,0.8)',
       padding: '2px 8px',
-      color: '#FF533D', // Coral color
+      borderRadius: '4px',
+      color: '#FF533D', // Coral color for skills
       fontSize: '12px',
       whiteSpace: 'nowrap',
       userSelect: 'none',
       pointerEvents: 'none',
-      fontWeight: '500',
     }}>
       {text}
     </div>
   </Html>
 );
+
+
+const generateSkillPosition = () => {
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.random() * Math.PI;
+  const radius = 100 + Math.random() * 50; // Range
+  
+  return {
+    x: radius * Math.sin(phi) * Math.cos(theta),
+    y: (Math.random() * 600) - 300, // Vertical spread
+    z: radius * Math.sin(phi) * Math.sin(theta)
+  };
+};
+
+const MilkyWay = () => {
+  const texture = useLoader(TextureLoader, '/src/assets/images/skills/milky-way.png');
+  
+  return (
+    <mesh rotation={[0, 0, 0]} position={[0, 0, -500]}>
+      <planeGeometry args={[1000, 1000]} />
+      <meshBasicMaterial 
+        map={texture} 
+        side={DoubleSide}
+        transparent={true}
+        opacity={0.8}
+      />
+    </mesh>
+  );
+};
 
 const SunSphere = () => {
   const meshRef = useRef();
@@ -83,54 +129,42 @@ const PlanetSphere = ({ color, size, orbitRadius, orbitSpeed, emissive, name }) 
   );
 };
 
-const CenterSphere = () => {
-  const meshRef = useRef();
-
-  useFrame(({ clock }) => {
-    meshRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-  });
+const BackgroundStars = React.memo(() => {
+  // Generate star positions once when component mounts
+  const stars = useMemo(() => {
+    const starArray = [];
+    for (let i = 0; i < 2000; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      const radius = 20 + Math.random() * 180;
+      
+      const x = radius * Math.sin(phi) * Math.cos(theta);
+      const y = radius * Math.sin(phi) * Math.sin(theta);
+      const z = radius * Math.cos(phi);
+      
+      const distance = Math.sqrt(x*x + y*y + z*z);
+      const size = 0.05 + (0.05 * (1 - distance/200));
+      
+      starArray.push({ position: [x, y, z], size, opacity: 0.3 + Math.random() * 0.7 });
+    }
+    return starArray;
+  }, []);
 
   return (
-    <mesh ref={meshRef}>
-      <sphereGeometry args={[2, 32, 32]} />
-      <meshStandardMaterial
-        color="#FF533D"
-        metalness={0.8}
-        roughness={0.2}
-        transparent={false}
-      />
-    </mesh>
+    <group>
+      {stars.map((star, i) => (
+        <mesh key={i} position={star.position}>
+          <sphereGeometry args={[star.size, 8, 8]} />
+          <meshBasicMaterial 
+            color="#ffffff" 
+            opacity={star.opacity}
+            transparent
+          />
+        </mesh>
+      ))}
+    </group>
   );
-};
-
-const BackgroundStar = () => {
-  const meshRef = useRef();
-  
-  // Generate random spherical coordinates
-  const theta = Math.random() * Math.PI * 2; // Horizontal angle
-  const phi = Math.random() * Math.PI; // Vertical angle
-  const radius = 20 + Math.random() * 20; // Random distance from center
-  
-  // Convert to Cartesian coordinates
-  const x = radius * Math.sin(phi) * Math.cos(theta);
-  const y = radius * Math.sin(phi) * Math.sin(theta);
-  const z = radius * Math.cos(phi);
-  
-  return (
-    <mesh 
-      ref={meshRef} 
-      position={[x, y, z]}
-    >
-      <sphereGeometry args={[0.03, 8, 8]} />
-      <meshBasicMaterial 
-        color="#ffffff" 
-        opacity={0.8 + Math.random() * 0.2}
-        transparent
-      />
-    </mesh>
-  );
-};
-
+});
 
 const ShootingStar = () => {
   const meshRef = useRef();
@@ -161,9 +195,13 @@ const ShootingStar = () => {
   );
 };
 
-const SkillsPlanetView = ({ skills }) => {
+const SkillsPlanetView = ({ skills, skillPositions, setIsGameLocked, isFullScreen, toggleFullScreen }) => {
   const [cameraInfo, setCameraInfo] = useState({ x: 0, y: 0, z: 0, zoom: 1 });
-  
+  const [isLocked, setIsLocked] = useState(false);
+  const controlsRef = useRef();
+  const velocityRef = useRef({ x: 0, z: 0 });
+  const keysPressed = useRef(new Set());
+
   const handleCameraChange = (camera) => {
     setCameraInfo({
       x: camera.position.x.toFixed(2),
@@ -173,9 +211,110 @@ const SkillsPlanetView = ({ skills }) => {
     });
   };
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      keysPressed.current.add(event.key.toLowerCase());
+    };
+  
+    const handleKeyUp = (event) => {
+      keysPressed.current.delete(event.key.toLowerCase());
+    };
+  
+    const updateCamera = () => {
+      if (!controlsRef.current || !controlsRef.current.isLocked) return;
+    
+      const camera = controlsRef.current.getObject();
+      const moveSpeed = 0.5;
+    
+      // Calculate movement
+      const movement = new Vector3(0, 0, 0);
+      if (keysPressed.current.has('w') || keysPressed.current.has('arrowup')) {
+        movement.z -= moveSpeed;
+      }
+      if (keysPressed.current.has('s') || keysPressed.current.has('arrowdown')) {
+        movement.z += moveSpeed;
+      }
+      if (keysPressed.current.has('a') || keysPressed.current.has('arrowleft')) {
+        movement.x -= moveSpeed;
+      }
+      if (keysPressed.current.has('d') || keysPressed.current.has('arrowright')) {
+        movement.x += moveSpeed;
+      }
+      if (keysPressed.current.has('shift')) {
+        movement.y -= moveSpeed;
+      }
+      if (keysPressed.current.has(' ')) {
+        movement.y += moveSpeed;
+      }
+    
+      // Apply movement relative to camera rotation
+      movement.applyQuaternion(camera.quaternion);
+      camera.position.add(movement);
+    
+      handleCameraChange(camera);
+    };
+    
+  
+    // Use requestAnimationFrame instead of setInterval for smoother performance
+    let animationFrameId;
+    const animate = () => {
+      updateCamera();
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    animate();
+  
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+  
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsGameLocked(isLocked);
+  }, [isLocked, setIsGameLocked]);
+  
+  const handleClick = () => {
+    if (!isLocked) {
+      setIsLocked(true);
+      document.body.requestPointerLock();
+      if (!isFullScreen) {
+        toggleFullScreen();
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullScreen(!!document.fullscreenElement);
+    };
+  
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);  
+
+  useEffect(() => {
+    const handleResize = () => {
+      const canvas = document.querySelector('canvas');
+      if (canvas) {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+    };
+  
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);  
+  
   return (
-    <div className="planet-view-container">
-      {/* Camera info overlay */}
+    <div className="planet-view-container" onClick={handleClick}>
       <div style={{
         position: 'absolute',
         top: '1rem',
@@ -190,35 +329,78 @@ const SkillsPlanetView = ({ skills }) => {
         x: {cameraInfo.x} y: {cameraInfo.y} z: {cameraInfo.z}<br/>
         zoom: {cameraInfo.zoom}
       </div>
-
-      <Canvas
-        camera={{ 
-          position: [-20, 10, 30],
-          fov: 45,
-          near: 0.1,
-          far: 1000
+  
+      <div style={{
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
+        color: '#FF533D',
+        fontSize: '12px',
+        zIndex: 100,
+        background: 'rgba(0,0,0,0.5)',
+        padding: '8px',
+        borderRadius: '4px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px',
+      }}>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add('arrowup')}
+          onPointerUp={() => keysPressed.current.delete('arrowup')}
+          onPointerLeave={() => keysPressed.current.delete('arrowup')}
+        >↑ Forward</button>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add('arrowdown')}
+          onPointerUp={() => keysPressed.current.delete('arrowdown')}
+          onPointerLeave={() => keysPressed.current.delete('arrowdown')}
+        >↓ Backward</button>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add('arrowleft')}
+          onPointerUp={() => keysPressed.current.delete('arrowleft')}
+          onPointerLeave={() => keysPressed.current.delete('arrowleft')}
+        >← Left</button>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add('arrowright')}
+          onPointerUp={() => keysPressed.current.delete('arrowright')}
+          onPointerLeave={() => keysPressed.current.delete('arrowright')}
+        >→ Right</button>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add('shift')}
+          onPointerUp={() => keysPressed.current.delete('shift')}
+          onPointerLeave={() => keysPressed.current.delete('shift')}
+        >⇧ Down</button>
+        <button 
+          style={controlButtonStyle}
+          onPointerDown={() => keysPressed.current.add(' ')}
+          onPointerUp={() => keysPressed.current.delete(' ')}
+          onPointerLeave={() => keysPressed.current.delete(' ')}
+        >␣ Up</button>
+      </div>
+  
+      <Canvas camera={{ position: [-20, 10, 30], fov: 45, near: 0.1, far: 10000 }}
+        onCreated={({ gl, scene, camera }) => {
+          handleCameraChange(camera);
+          gl.setClearColor('#000000', 1);
         }}
-        onCreated={({ camera }) => handleCameraChange(camera)}
+        style={{ width: '100%', height: '100%', cursor: 'pointer' }}
       >
         <Suspense fallback={<CanvasLoader />}>
-        <OrbitControls 
-          enableZoom={true}
-          minDistance={10}
-          maxDistance={100}
-          enableDamping={true}
-          dampingFactor={0.05}
-          rotateSpeed={0.5}
-        />
-
+          <MilkyWay />
+          <PointerLockControls
+            ref={controlsRef}
+            minPolarAngle={0}
+            maxPolarAngle={Math.PI}
+            onLock={() => setIsLocked(true)}
+            onUnlock={() => setIsLocked(false)}
+          />
           <ambientLight intensity={0.2} />
           <pointLight position={[0, 0, 0]} intensity={2} />
-          
-          {/* Background stars */}
-          {[...Array(3000)].map((_, i) => (
-            <BackgroundStar key={`star-${i}`} />
-          ))}
-          
-          {/* Solar System */}
+          <BackgroundStars />
           <SunSphere />
           <Label text="Sun" position={[0, 4, 0]} />
           <PlanetSphere name="Mercury" color="#E5E5E5" size={0.4} orbitRadius={4} orbitSpeed={0.8} />
@@ -229,27 +411,29 @@ const SkillsPlanetView = ({ skills }) => {
           <PlanetSphere name="Saturn" color="#F4A460" size={1.2} orbitRadius={16} orbitSpeed={0.3} />
           <PlanetSphere name="Uranus" color="#40E0D0" size={1.0} orbitRadius={19} orbitSpeed={0.2} />
           <PlanetSphere name="Neptune" color="#4169E1" size={0.9} orbitRadius={22} orbitSpeed={0.1} />
-
-          
-          {/* Skills balls */}
           {skills?.map((skill, index) => (
             <Ball 
               key={skill.name}
               icon={skill.icon}
+              name={skill.name}
               index={index}
               total={skills.length}
               planetView={true}
+              position={[
+                skillPositions[skill.name]?.x || 0,
+                skillPositions[skill.name]?.y || 0,
+                skillPositions[skill.name]?.z || 0
+              ]}
+              scale={3}
             />
           ))}
-          
-          {/* Shooting stars */}
           {[...Array(3)].map((_, i) => (
             <ShootingStar key={`shooting-${i}`} />
           ))}
         </Suspense>
       </Canvas>
     </div>
-  );
+  );  
 };
 
 export default SkillsPlanetView;

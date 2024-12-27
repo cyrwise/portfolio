@@ -1,6 +1,5 @@
-// App.jsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import AnimatedCursor from "react-animated-cursor";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -10,6 +9,8 @@ import Skills from './components/Skills';
 import Contact from './components/Contact';
 import Resume from './components/Resume';
 import CustomScrollbar from './components/CustomScrollbar';
+import GameView from './components/GameView';
+
 import './App.css';
 
 // Font Awesome imports
@@ -21,10 +22,27 @@ import '@fortawesome/fontawesome-svg-core/styles.css';
 library.add(fas, fab);
 
 function App() {
+  const [isGameLocked, setIsGameLocked] = useState(false);
+
   return (
     <CustomScrollbar>
-    <Router>
-      <div className="min-h-screen bg-[#001018]">
+      <Router>
+        <AppContent isGameLocked={isGameLocked} setIsGameLocked={setIsGameLocked} />
+      </Router>
+    </CustomScrollbar>
+  );
+}
+
+function AppContent({ isGameLocked, setIsGameLocked }) {
+  const location = useLocation();
+  const showCursor = !location.pathname.includes('game') && 
+    (!location.pathname.includes('skills') || (location.pathname.includes('skills') && !isGameLocked));
+  
+  const showNavbar = !location.pathname.includes('game');
+
+  return (
+    <div className="min-h-screen bg-[#001018]">
+      {showCursor && (
         <AnimatedCursor
           innerSize={8}
           outerSize={35}
@@ -47,32 +65,32 @@ function App() {
             '.model-viewer'
           ]}
         />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={
-            <>
-              <Hero />
-              <Experience />
-              <Projects />
-              <Skills />
-            </>
-          } />
-          <Route path="/home" element={
-            <>
-              <Hero />
-              <Experience />
-              <Projects />
-              <Skills />
-            </>
-          } />
-          <Route path="/projects" element={<Projects />} />
-          <Route path="/skills" element={<Skills />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/resume" element={<Resume />} />
-        </Routes>
-      </div>
-    </Router>
-    </CustomScrollbar>
+      )}
+      {showNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={
+          <>
+            <Hero />
+            <Experience />
+            <Projects />
+            <Skills setIsGameLocked={setIsGameLocked} />
+          </>
+        } />
+        <Route path="/home" element={
+          <>
+            <Hero />
+            <Experience />
+            <Projects />
+            <Skills setIsGameLocked={setIsGameLocked} />
+          </>
+        } />
+        <Route path="/projects" element={<Projects />} />
+        <Route path="/skills" element={<Skills setIsGameLocked={setIsGameLocked} />} />
+        <Route path="/game" element={<GameView setIsGameLocked={setIsGameLocked} />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/resume" element={<Resume />} />
+      </Routes>
+    </div>
   );
 }
 

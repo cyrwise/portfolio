@@ -1,8 +1,9 @@
 // Skills.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BallCanvas } from "./Ball";
 import SkillsPlanetView from "./SkillsPlanetView";
+import { useNavigate } from 'react-router-dom';
 import './Skills.css';
 
 // Backend Logos
@@ -33,10 +34,12 @@ import awsLogo from '/src/assets/images/skills/aws-logo.png';
 import cudaLogo from '/src/assets/images/skills/cuda-logo.png';
 import figmaLogo from '/src/assets/images/skills/figma-logo.png';
 
-function Skills() {
+function Skills({ setIsGameLocked }) {  
   const [activeCategory, setActiveCategory] = useState("Backend");
   const [viewMode, setViewMode] = useState("ball");
-  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [skillPositions, setSkillPositions] = useState({});
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const navigate = useNavigate();
 
   const categories = {
     Frontend: [
@@ -69,6 +72,62 @@ function Skills() {
     ],
   };
 
+  const toggleFullScreen = async () => {
+    try {
+      const element = document.documentElement;
+      if (!document.fullscreenElement) {
+        await element.requestFullscreen();
+        // Add small delay to allow proper rendering
+        setTimeout(() => {
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (err) {
+      console.error('Fullscreen error:', err);
+    }
+  };
+  
+
+  useEffect(() => {
+    const generatePositions = () => {
+      const positions = {};
+      categories[activeCategory].forEach((skill) => {
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI;
+        const radius = 50 + Math.random() * 100;
+        
+        positions[skill.name] = {
+          x: radius * Math.sin(phi) * Math.cos(theta),
+          y: (Math.random() * 200) - 100,
+          z: radius * Math.sin(phi) * Math.sin(theta)
+        };
+      });
+      setSkillPositions(positions);
+    };
+
+    generatePositions();
+  }, [activeCategory]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape' && viewMode === 'planet') {
+        setViewMode('ball');
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+        setIsFullScreen(false);
+      }
+    };
+  
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [viewMode]);
+  
+
   return (
     <div className="skills-container">
       <h1 className="skills-title">Skills</h1>
@@ -90,27 +149,38 @@ function Skills() {
         
         <motion.button
           className="view-toggle-button"
-          onClick={() => setViewMode(viewMode === "ball" ? "planet" : "ball")}
+          onClick={() => navigate('/game', { 
+            state: { 
+              skills: categories[activeCategory],
+              skillPositions: skillPositions 
+            } 
+          })}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          {viewMode === "ball" ? "Planet View" : "Ball View"}
+          Planet View
         </motion.button>
       </div>
 
       <AnimatePresence mode="wait">
-        {viewMode === "planet" ? (
-          <motion.div
-            key="planet-view"
-            className="planet-view-container"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <SkillsPlanetView skills={categories[activeCategory]} />
-          </motion.div>
-        ) : (
+      {viewMode === "planet" ? (
+      <motion.div
+        key="planet-view"
+        className="planet-view-container"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <SkillsPlanetView 
+          skills={categories[activeCategory]}
+          skillPositions={skillPositions}
+          setIsGameLocked={setIsGameLocked}
+          isFullScreen={isFullScreen}
+          toggleFullScreen={toggleFullScreen}
+        />
+      </motion.div>
+    ) : (
           <motion.div
             key="ball-view"
             className="skills-display"
@@ -139,6 +209,5 @@ function Skills() {
     </div>
   );
 }
-
 
 export default Skills;
