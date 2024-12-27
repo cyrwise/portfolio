@@ -1,10 +1,122 @@
-.game-container {
+/* GameView.css */
+.game-view-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-  }
-  
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.game-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-menu {
+    background: rgba(10, 12, 18, 0.95);
+    border: 2px solid #FF533D;
+    border-radius: 15px;
+    padding: 2.5rem;
+    width: 450px;
+    box-shadow: 0 0 40px rgba(255, 83, 61, 0.2),
+                0 0 80px rgba(255, 83, 61, 0.1),
+                inset 0 0 20px rgba(255, 83, 61, 0.1);
+}
+
+.menu-content {
+    position: relative;
+}
+
+.menu-content::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -20px;
+    bottom: -20px;
+    border: 1px solid rgba(255, 83, 61, 0.3);
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+.game-menu h2 {
+    color: #FF533D;
+    font-size: 2.2rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 10px rgba(255, 83, 61, 0.5);
+    font-family: 'Space Mono', monospace;
+}
+
+.game-menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.menu-button {
+    background: transparent;
+    border: 2px solid #FF533D;
+    color: #FF533D;
+    padding: 1.2rem;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Space Mono', monospace;
+}
+
+.menu-button::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 83, 61, 0.1),
+        transparent
+    );
+    transform: rotate(45deg);
+    transition: transform 0.6s;
+}
+
+.menu-button:hover::after {
+    transform: rotate(45deg) translate(50%, 50%);
+}
+
+.menu-button:hover {
+    background: #FF533D;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(255, 83, 61, 0.3);
+}
+
+.menu-button.resume {
+    background: #FF533D;
+    color: #000;
+}
+
+.menu-button.resume:hover {
+    background: #ff6b57;
+    border-color: #ff6b57;
+}

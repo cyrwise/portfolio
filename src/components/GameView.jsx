@@ -1,64 +1,78 @@
-import React, { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import SkillsPlanetView from './SkillsPlanetView';
+// GameView.jsx
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import Game from "./Game";
+import "./GameView.css";
 
-const GameView = ({ setIsGameLocked }) => {
-  const location = useLocation();
+function GameView({ skills, setIsGameLocked, onClose }) {
   const navigate = useNavigate();
-  const { skills, skillPositions } = location.state || {};
+  const [showMenu, setShowMenu] = useState(false);
 
-  useEffect(() => {
-    // Force proper scaling on mount
-    window.dispatchEvent(new Event('resize'));
-  }, []);
-
-  // Redirect if no skills data
-  if (!skills || !skillPositions) {
-    navigate('/skills');
-    return null;
-  }
+  const handleReturnToSkills = () => {
+    navigate("/", { state: { scrollToSkills: true } });
+  };
 
   return (
-    <div 
-      className="game-container" 
-      style={{ 
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        width: '100vw',
-        height: '100vh',
-        margin: 0,
-        padding: 0,
-        overflow: 'hidden',
-        background: '#000',
-        transform: 'translate3d(0, 0, 0)',
-        backfaceVisibility: 'hidden'
-      }}
+    <motion.div
+      className="game-view-container"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
     >
-      <SkillsPlanetView 
+      <Game 
         skills={skills}
-        skillPositions={skillPositions}
         setIsGameLocked={setIsGameLocked}
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        onClose={onClose}
       />
-      <button
-        onClick={() => navigate('/skills')}
-        style={{
-          position: 'fixed',
-          top: '1rem',
-          right: '1rem',
-          zIndex: 1000,
-          background: 'rgba(255,83,61,0.2)',
-          border: '1px solid #FF533D',
-          color: '#FF533D',
-          padding: '8px 16px',
-          borderRadius: '4px',
-          cursor: 'pointer'
-        }}
-      >
-        Exit Game
-      </button>
-    </div>
+      <AnimatePresence>
+        {showMenu && (
+          <motion.div
+            className="game-menu-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              className="game-menu"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", duration: 0.5 }}
+            >
+              <div className="menu-content">
+                <h2>Space Navigation</h2>
+                <div className="game-menu-buttons">
+                  <motion.button
+                    className="menu-button resume"
+                    onClick={() => {
+                      setShowMenu(false);
+                      document.body.requestPointerLock();
+                    }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Continue Exploration
+                  </motion.button>
+                  <motion.button
+                    className="menu-button"
+                    onClick={handleReturnToSkills}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Return to Base
+                  </motion.button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
-};
+}
 
 export default GameView;

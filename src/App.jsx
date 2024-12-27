@@ -35,14 +35,12 @@ function App() {
 
 function AppContent({ isGameLocked, setIsGameLocked }) {
   const location = useLocation();
-  const showCursor = !location.pathname.includes('game') && 
-    (!location.pathname.includes('skills') || (location.pathname.includes('skills') && !isGameLocked));
-  
-  const showNavbar = !location.pathname.includes('game');
+
+  const isGameRoute = location.pathname === '/game';
 
   return (
-    <div className="min-h-screen bg-[#001018]">
-      {showCursor && (
+    <div className={`min-h-screen ${isGameRoute ? 'bg-[#000000]' : 'bg-[#001018]'}`}>
+      {!isGameRoute && (
         <AnimatedCursor
           innerSize={8}
           outerSize={35}
@@ -66,7 +64,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
           ]}
         />
       )}
-      {showNavbar && <Navbar />}
+      {!isGameRoute && <Navbar />}
       <Routes>
         <Route path="/" element={
           <>

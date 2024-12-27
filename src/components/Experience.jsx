@@ -2,6 +2,12 @@
 import React from 'react';
 import RetroOverlay from './RetroOverlay';
 
+import nasaLogo from '/src/assets/images/experience/nasa-logo.png';
+import anreLogo from '/src/assets/images/experience/anre-logo.png';
+import bccLogo from '/src/assets/images/experience/bcc-logo.png';
+import ivycodeLogo from '/src/assets/images/experience/ivycode-logo.png';
+import sccrLogo from '/src/assets/images/experience/sccr-logo.jpg';
+
 const Experience = () => {
   return (
     <div className="bg-[#001018] p-8 max-w-4xl mx-auto relative">
@@ -11,35 +17,35 @@ const Experience = () => {
       <div className="space-y-6 relative">
         <ExperienceItem 
           company="NASA"
-          logo="src/assets/images/experience/nasa-logo.png"
+          logo={nasaLogo}
           role="NCAS Intern"
           date="January 2025 - ?"
           className="border-l-[#FF533D]"
         />
         <ExperienceItem 
           company="Anre AI"
-          logo="src/assets/images/experience/anre-logo.png"
+          logo={anreLogo}
           role="Software Engineer"
           date="October 2023 - Present"
           className="border-l-[#FF533D]"
         />
         <ExperienceItem 
           company="Berkeley City College"
-          logo="src/assets/images/experience/bcc-logo.png"
+          logo={bccLogo}
           role="Computer Science TA, Computer Science, Physics and Math Tutor"
           date="August 2023 - Present"
           className="border-l-[#FF533D]"
         />
         <ExperienceItem 
           company="IvyCode Consulting"
-          logo="src/assets/images/experience/ivycode-logo.png"
+          logo={ivycodeLogo}
           role="Software Engineering Intern"
           date="June 2024 - August 2024"
           className="border-l-[#FF533D]"
         />
         <ExperienceItem 
           company="Stanford Center for Clinical Research"
-          logo="src/assets/images/experience/sccr-logo.jpg"
+          logo={sccrLogo}
           role="Deep Learning Researcher"
           date="October 2023 - January 2024"
           className="border-l-[#FF533D]"
@@ -48,7 +54,6 @@ const Experience = () => {
     </div>
   );
 };
-
 
 const ExperienceItem = ({ company, logo, role, date, className }) => {
   return (

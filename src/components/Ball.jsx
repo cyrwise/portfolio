@@ -1,3 +1,4 @@
+// Ball.jsx
 import React, { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Decal, Float, OrbitControls, Preload, useTexture, Html } from "@react-three/drei";
@@ -20,13 +21,13 @@ const SkillLabel = ({ text, position }) => (
   </Html>
 );
 
-const Ball = ({ icon, index, total, planetView = false, position, rotation, scale, name }) => {
+const Ball = ({ icon, index, total, gameView = false, position, rotation, scale, name }) => {
   const [decal] = useTexture([icon]);
   const meshRef = useRef();
   const initialRotation = useRef([0, Math.random() * Math.PI * 2, 0]);
   
   useFrame(({ clock }) => {
-    if (planetView) {
+    if (gameView) {
       // Smooth continuous rotation
       meshRef.current.rotation.y = initialRotation.current[1] + clock.getElapsedTime() * 0.2;
     }
@@ -41,7 +42,7 @@ const Ball = ({ icon, index, total, planetView = false, position, rotation, scal
           ref={meshRef} 
           castShadow 
           receiveShadow 
-          scale={planetView ? 2.75 : 2.75}
+          scale={gameView ? 2.75 : 2.75}
         >
           <icosahedronGeometry args={[1, 1]} />
           <meshStandardMaterial
@@ -58,7 +59,7 @@ const Ball = ({ icon, index, total, planetView = false, position, rotation, scal
             flatShading
           />
         </mesh>
-        {planetView && name && (
+        {gameView && name && (
           <Html position={[0, 3, 0]}>
             <div style={{
               background: 'rgba(0,0,0,0.8)',
@@ -79,13 +80,13 @@ const Ball = ({ icon, index, total, planetView = false, position, rotation, scal
   );
 };
 
-const BallCanvas = ({ icon, index, total, planetView = false }) => {
+const BallCanvas = ({ icon, index, total, gameView = false }) => {
   return (
     <Canvas
-      frameloop={planetView ? 'always' : 'demand'}
+      frameloop={gameView ? 'always' : 'demand'}
       dpr={[1, 2]}
       gl={{ preserveDrawingBuffer: true }}
-      camera={planetView ? {
+      camera={gameView ? {
         fov: 45,
         near: 0.1,
         far: 200,
@@ -98,7 +99,7 @@ const BallCanvas = ({ icon, index, total, planetView = false }) => {
           icon={icon} 
           index={index} 
           total={total} 
-          planetView={planetView} 
+          gameView={gameView} 
         />
       </Suspense>
       <Preload all />
