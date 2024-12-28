@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import AnimatedPolygons from './AnimatedPolygons';
 import * as pdfjsLib from 'pdfjs-dist';
 import { pdfjs } from 'react-pdf';
+import myResume from '/src/assets/resume.pdf';
+
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const Resume = () => {
@@ -21,7 +23,7 @@ const Resume = () => {
             {/* PDF Viewer */}
             <div className="w-full h-[calc(100vh-120px)] bg-white">
               <iframe
-                src="/resume.pdf"
+                src={myResume}
                 title="Resume"
                 className="w-full h-full"
                 style={{ border: 'none' }}
