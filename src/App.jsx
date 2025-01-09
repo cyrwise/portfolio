@@ -4,7 +4,7 @@ import AnimatedCursor from "react-animated-cursor";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Experience from './components/Experience';
-// import Education from './components/Education'
+import Education from './components/education/Education'
 import Projects from './components/Projects';
 import Skills from './components/Skills';
 import Contact from './components/Contact';
@@ -71,7 +71,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
           <>
             <Hero />
             <Experience />
-            {/* <Education /> */}
+            <Education />
             <Projects />
             <Skills setIsGameLocked={setIsGameLocked} />
           </>
