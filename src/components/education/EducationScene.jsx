@@ -1,8 +1,7 @@
-// EducationScene.jsx
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Stars, Environment } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
+import { EffectComposer } from '@react-three/postprocessing';
 
 export default function EducationScene({ children }) {
   return (
@@ -24,14 +23,7 @@ export default function EducationScene({ children }) {
             maxPolarAngle={Math.PI / 2}
             minPolarAngle={Math.PI / 3}
           />
-          <EffectComposer>
-            <Bloom 
-              intensity={1.5}
-              luminanceThreshold={0.9}
-              luminanceSmoothing={0.9}
-            />
-            <ChromaticAberration offset={[0.002, 0.002]} />
-          </EffectComposer>
+          {/* Remove or comment out the EffectComposer section */}
         </Suspense>
       </Canvas>
     </div>

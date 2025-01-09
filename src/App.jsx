@@ -11,6 +11,7 @@ import Contact from './components/Contact';
 import Resume from './components/Resume';
 import CustomScrollbar from './components/CustomScrollbar';
 import GameView from './components/GameView';
+import Portfolio from './components/Portfolio';
 
 import './App.css';
 
@@ -36,7 +37,6 @@ function App() {
 
 function AppContent({ isGameLocked, setIsGameLocked }) {
   const location = useLocation();
-
   const isGameRoute = location.pathname === '/game';
 
   return (
@@ -67,23 +67,8 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
       )}
       {!isGameRoute && <Navbar />}
       <Routes>
-        <Route path="/" element={
-          <>
-            <Hero />
-            <Experience />
-            <Education />
-            <Projects />
-            <Skills setIsGameLocked={setIsGameLocked} />
-          </>
-        } />
-        <Route path="/home" element={
-          <>
-            <Hero />
-            <Experience />
-            <Projects />
-            <Skills setIsGameLocked={setIsGameLocked} />
-          </>
-        } />
+        <Route path="/" element={<Portfolio setIsGameLocked={setIsGameLocked} />} />
+        <Route path="/portfolio" element={<Portfolio setIsGameLocked={setIsGameLocked} />} />
         <Route path="/projects" element={<Projects />} />
         <Route path="/skills" element={<Skills setIsGameLocked={setIsGameLocked} />} />
         <Route path="/game" element={<GameView setIsGameLocked={setIsGameLocked} />} />

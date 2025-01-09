@@ -52,9 +52,14 @@ export default function ExpandedView({ show, school, onClose }) {
                       initial={{ opacity: 0, x: 20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="text-zinc-300"
+                      className="text-zinc-300 flex items-center gap-4"
                     >
-                      {activity}
+                      <img
+                        src={school.activityImages[i]}
+                        alt={activity}
+                        className="w-8 h-8 rounded-full object-cover bg-gray-800"
+                      />
+                      <span>{activity}</span>
                     </motion.li>
                   ))}
                 </ul>

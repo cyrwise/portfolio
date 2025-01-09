@@ -8,41 +8,71 @@ import ExpandedView from './ExpandedView';
 import ucbLogo from '/src/assets/images/education/berkeley-logo.jpg';
 import bccLogo from '/src/assets/images/education/bcc-logo.png';
 
+import anreLogo from '/src/assets/images/education/anre-logo.png';
+import csuaLogo from '/src/assets/images/education/csua-logo.png';
+import openProjectLogo from '/src/assets/images/education/openproject-logo.png';
+import ispmaLogo from '/src/assets/images/education/ispma-logo.png';
+
+import bamLogo from '/src/assets/images/education/bam-logo.png';
+import beeLogo from '/src/assets/images/education/bee-logo.png';
+import fblaLogo from '/src/assets/images/education/fbla-logo.png';
+import wlcLogo from '/src/assets/images/education/wlc-logo.png';
+// import designClubLogo from '/src/assets/images/education/designclub-logo.png';
 
 const schools = {
   berkeley: {
     name: "UC Berkeley",
     logo: ucbLogo,
+    years: "2023 - present",
     degree: "Computer Science, B.S.",
     courses: [
-      "CS 61A: Structure and Interpretation of Computer Programs",
-      "CS 61B: Data Structures",
-      "CS 70: Discrete Mathematics and Probability Theory",
-      "EECS 126: Probability and Random Processes",
+      "EECS 16A: Designing Information Devices and Systems I",
+      "EECS 16B: Designing Information Devices and Systems II",
+      "ENERES C100: Energy and Society",
+      "CS 61A (Laney): Structure and Interpretation of Computer Programs"
     ],
     activities: [
-      "Computer Science Mentors (CSM)",
-      "Berkeley Innovation",
-      "Web Development Club",
+      "Anre AI Berkeley",
+      "Computer Science Undergraduate Association",
+      "OpenProject",
+      "International Software Product Management Association",
+    ],
+    activityImages: [
+      anreLogo,
+      csuaLogo,
+      openProjectLogo,
+      ispmaLogo
     ]
   },
   bcc: {
     name: "Berkeley City College",
     logo: bccLogo,
+    years: "2022 - 2025",
     degree: "Associate's Degree",
     courses: [
-      "Introduction to Programming",
-      "Linear Algebra",
-      "Multivariable Calculus",
-      "Physics for Scientists and Engineers"
+      "CIS 25: Object Orientated Programming C++",
+      "CIS 27: Data Structures & Algorithms",
+      "CIS 36A: Java Programming",
+      "COMSC 260: Assembly Programming/Computer Organization",
+      "MATH 3E: Linear Algebra",
     ],
     activities: [
-      "Mathematics Club President",
-      "Coding Club Member",
-      "Peer Tutor"
+      "Berkeley Applied Mathematics",
+      "Berkeley Electronics & Engineering",
+      "Future Business Leaders of America",
+      "Women's Leadership Club at BCC",
+      // "Design Club at BCC"
+    ],
+    activityImages: [
+      bamLogo,
+      beeLogo,
+      fblaLogo,
+      wlcLogo,
+      // designClubLogo
     ]
   }
 };
+
 
 export default function Education() {
   const [expandedSchool, setExpandedSchool] = useState(null);
@@ -53,10 +83,11 @@ export default function Education() {
       <motion.h1
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
-        className="absolute top-10 left-1/2 transform -translate-x-1/2 text-5xl font-bold text-red-500 z-10"
+        className="text-center absolute w-full top-10 text-5xl font-bold text-red-500 z-10"
       >
         Education
       </motion.h1>
+
 
       <EducationScene>
         <EducationCard3D
