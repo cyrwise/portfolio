@@ -1,5 +1,6 @@
 // Experience.jsx
 import React from 'react';
+import DropdownSection from './DropdownSection';
 import RetroOverlay from './RetroOverlay';
 
 import nasaLogo from '/src/assets/images/experience/nasa-logo.png';
@@ -10,10 +11,8 @@ import sccrLogo from '/src/assets/images/experience/sccr-logo.jpg';
 
 const Experience = () => {
   return (
-    <div className="bg-[#001018] p-8 max-w-4xl mx-auto relative">
+    <DropdownSection title="Technical Experience">
       <RetroOverlay />
-      <h2 className="text-[#FF533D] text-3xl font-bold mb-8 relative">&gt;&gt; Technical Experience</h2>
-      
       <div className="space-y-6 relative">
         <ExperienceItem 
           company="NASA"
@@ -51,7 +50,7 @@ const Experience = () => {
           className="border-l-[#FF533D]"
         />
       </div>
-    </div>
+    </DropdownSection>
   );
 };
 

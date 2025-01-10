@@ -1,3 +1,4 @@
+// EducationCard3D.jsx
 import React, { useRef } from 'react';
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { TextureLoader } from 'three';
@@ -7,6 +8,7 @@ import { Text } from '@react-three/drei';
 export default function EducationCard3D({ position, school, isExpanded, onClick }) {
   const meshRef = useRef();
   const textRef = useRef();
+  const bottomTextRef = useRef();
   const texture = useLoader(TextureLoader, school.logo);
   const { camera } = useThree();
   
@@ -27,6 +29,15 @@ export default function EducationCard3D({ position, school, isExpanded, onClick 
       );
       textRef.current.lookAt(camera.position);
     }
+
+    if (bottomTextRef.current) {
+      bottomTextRef.current.position.set(
+        hoverX,
+        -2.5 + hoverY,
+        0
+      );
+      bottomTextRef.current.lookAt(camera.position);
+    }
   });
 
   const springs = useSpring({
@@ -45,28 +56,30 @@ export default function EducationCard3D({ position, school, isExpanded, onClick 
         anchorX="center"
         anchorY="middle"
       >
-        {school.years}
+        {school.period}
       </Text>
       <mesh
         ref={meshRef}
         onClick={onClick}
       >
         <boxGeometry args={[3, 4, 0.2]} />
-        <meshBasicMaterial 
-          map={texture}
-          transparent={true}
-          opacity={1}
-        />
-        <Text
-          position={[0, -1.8, 0.2]}
-          fontSize={0.2}
-          color="#FF533D"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {school.name}
-        </Text>
+        <meshBasicMaterial color={school.name.includes("University of California, Berkeley") ? "#B99B34" : "#D3D3D3"} attach="material-0" />
+        <meshBasicMaterial color={school.name.includes("University of California, Berkeley") ? "#B99B34" : "#D3D3D3"} attach="material-1" />
+        <meshBasicMaterial color={school.name.includes("University of California, Berkeley") ? "#B99B34" : "#D3D3D3"} attach="material-2" />
+        <meshBasicMaterial color={school.name.includes("University of California, Berkeley") ? "#B99B34" : "#D3D3D3"} attach="material-3" />
+        <meshBasicMaterial map={texture} attach="material-4" />
+        <meshBasicMaterial map={texture} attach="material-5" />
       </mesh>
+      <Text
+        ref={bottomTextRef}
+        position={[0, -2.5, 0]}
+        fontSize={0.2}
+        color="#FF533D"
+        anchorX="center"
+        anchorY="middle"
+      >
+        {school.name}
+      </Text>
     </animated.group>
   );
 }

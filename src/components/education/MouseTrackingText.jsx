@@ -1,3 +1,4 @@
+// MouseTrackingText.jsx
 import React from 'react';
 import useMousePosition from '../hooks/useMousePosition';
 

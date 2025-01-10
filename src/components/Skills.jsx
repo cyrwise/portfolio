@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from "react";
+// Skills.jsx
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import SkillsPV from "./SkillsPV";
 import { useNavigate } from 'react-router-dom';
+import DropdownSection from './DropdownSection';
 import './Skills.css';
 
 // Backend Logos
@@ -91,39 +93,48 @@ function Skills({ setIsGameLocked }) {
     });
   };
 
-  return (
-    <div className="skills-container">
-      <h1 className="skills-title">Skills</h1>
-      
-      <div className="view-controls">
-        <div className="category-buttons">
-          {Object.keys(categories).map((category) => (
-            <motion.button
-              key={category}
-              className={`category-button ${activeCategory === category ? 'active' : ''}`}
-              onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              {category}
-            </motion.button>
-          ))}
-        </div>
-        
-        <motion.button
-          className="view-toggle-button"
-          onClick={handleGameView}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          Game View
-        </motion.button>
-      </div>
+  const GameViewButton = (
+    <motion.button
+      className="px-4 py-2 bg-[#0A192F] text-[#FF533D] rounded-md border border-[#FF533D]/30 
+                hover:bg-[#FF533D]/10 transition-all duration-300 interactive"
+      onClick={handleGameView}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+    >
+      Game View
+    </motion.button>
+  );
 
-      <SkillsPV 
-        skills={categories[activeCategory]}
-        viewMode={viewMode}
-      />
+  return (
+    <div className="w-full bg-[#001018]">
+      <DropdownSection title="Skills" extraButton={GameViewButton}>
+        <div className="space-y-8 py-4">
+          <div className="flex justify-center gap-4 flex-wrap">
+            {Object.keys(categories).map((category) => (
+              <motion.button
+                key={category}
+                className={`px-6 py-2 rounded-md transition-all duration-300 interactive
+                  ${activeCategory === category 
+                    ? 'bg-[#FF533D] text-[#001018] font-semibold' 
+                    : 'bg-[#0A192F] text-[#FF533D] border border-[#FF533D]/30 hover:bg-[#FF533D]/10'
+                  }`}
+                onClick={() => setActiveCategory(category)}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {category}
+              </motion.button>
+            ))}
+          </div>
+
+          <div className="relative bg-[#0A192F] rounded-lg p-8">
+            <SkillsPV 
+              skills={categories[activeCategory]}
+              viewMode={viewMode}
+            />
+          </div>
+        </div>
+      </DropdownSection>
     </div>
   );
 }

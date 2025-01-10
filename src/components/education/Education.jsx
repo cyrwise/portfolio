@@ -1,123 +1,126 @@
 // Education.jsx
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { schools } from './educationData';
 import EducationScene from './EducationScene';
 import EducationCard3D from './EducationCard3D';
 import ExpandedView from './ExpandedView';
+import DropdownSection from '../DropdownSection';
 
-import ucbLogo from '/src/assets/images/education/berkeley-logo.jpg';
-import bccLogo from '/src/assets/images/education/bcc-logo.png';
+const EducationItem = ({ school }) => (
+  <motion.div 
+    initial={{ opacity: 0, x: -20 }}
+    animate={{ opacity: 1, x: 0 }}
+    className="border-l-2 border-[#FF533D] pl-6 py-4"
+  >
+    <div className="flex items-center gap-4 mb-2">
+      <img 
+        src={school.logo} 
+        alt={school.name}
+        className="w-12 h-12 rounded-full object-cover"
+      />
+      <div className="flex-1">
+        <div className="flex justify-between items-center">
+          <h3 className="text-xl font-bold text-white">{school.name}</h3>
+          <span className="text-[#FF533D] text-sm">{school.period}</span>
+        </div>
+        <p className="text-gray-400 text-sm">{school.role}</p>
+      </div>
+    </div>
 
-import anreLogo from '/src/assets/images/education/anre-logo.png';
-import csuaLogo from '/src/assets/images/education/csua-logo.png';
-import openProjectLogo from '/src/assets/images/education/openproject-logo.png';
-import ispmaLogo from '/src/assets/images/education/ispma-logo.png';
+    <div className="mt-4 ml-2">
+      <h4 className="text-[#FF533D] font-medium mb-2 text-sm">Relevant Coursework</h4>
+      <ul className="space-y-1">
+        {school.courses.map((course, index) => (
+          <li key={index} className="text-gray-400 text-sm">{course}</li>
+        ))}
+      </ul>
+    </div>
 
-import bamLogo from '/src/assets/images/education/bam-logo.png';
-import beeLogo from '/src/assets/images/education/bee-logo.png';
-import fblaLogo from '/src/assets/images/education/fbla-logo.png';
-import wlcLogo from '/src/assets/images/education/wlc-logo.png';
-// import designClubLogo from '/src/assets/images/education/designclub-logo.png';
-
-const schools = {
-  berkeley: {
-    name: "UC Berkeley",
-    logo: ucbLogo,
-    years: "2023 - present",
-    degree: "Computer Science, B.S.",
-    courses: [
-      "EECS 16A: Designing Information Devices and Systems I",
-      "EECS 16B: Designing Information Devices and Systems II",
-      "ENERES C100: Energy and Society",
-      "CS 61A (Laney): Structure and Interpretation of Computer Programs"
-    ],
-    activities: [
-      "Anre AI Berkeley",
-      "Computer Science Undergraduate Association",
-      "OpenProject",
-      "International Software Product Management Association",
-    ],
-    activityImages: [
-      anreLogo,
-      csuaLogo,
-      openProjectLogo,
-      ispmaLogo
-    ]
-  },
-  bcc: {
-    name: "Berkeley City College",
-    logo: bccLogo,
-    years: "2022 - 2025",
-    degree: "Associate's Degree",
-    courses: [
-      "CIS 25: Object Orientated Programming C++",
-      "CIS 27: Data Structures & Algorithms",
-      "CIS 36A: Java Programming",
-      "COMSC 260: Assembly Programming/Computer Organization",
-      "MATH 3E: Linear Algebra",
-    ],
-    activities: [
-      "Berkeley Applied Mathematics",
-      "Berkeley Electronics & Engineering",
-      "Future Business Leaders of America",
-      "Women's Leadership Club at BCC",
-      // "Design Club at BCC"
-    ],
-    activityImages: [
-      bamLogo,
-      beeLogo,
-      fblaLogo,
-      wlcLogo,
-      // designClubLogo
-    ]
-  }
-};
-
+    <div className="mt-4 ml-2">
+      <h4 className="text-[#FF533D] font-medium mb-2 text-sm">Activities</h4>
+      <ul className="space-y-2">
+        {school.activities.map((activity, index) => (
+          <li key={index} className="flex items-center gap-2">
+            <img 
+              src={activity.logo} 
+              alt={activity.name}
+              className="w-6 h-6 rounded-full object-cover"
+            />
+            <span className="text-gray-400 text-sm">{activity.name}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </motion.div>
+);
 
 export default function Education() {
+  const [is3DView, setIs3DView] = useState(false);
   const [expandedSchool, setExpandedSchool] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
+  const ViewToggleButton = (
+    <button
+      onClick={() => setIs3DView(!is3DView)}
+      className="px-4 py-2 bg-[#FF533D]/10 text-[#FF533D] rounded hover:bg-[#FF533D]/20 transition-colors text-sm"
+    >
+      {is3DView ? '2D View' : '3D View'}
+    </button>
+  );
+
+  const educationContent = (
+    <>
+      {is3DView ? (
+        <div className="h-[800px]">
+          <EducationScene>
+            <EducationCard3D
+              position={[-2, 0, 0]}
+              school={schools[0]}
+              isExpanded={expandedSchool === 0}
+              onClick={() => {
+                setExpandedSchool(0);
+                setShowDetails(true);
+              }}
+            />
+            <EducationCard3D
+              position={[2, 0, 0]}
+              school={schools[1]}
+              isExpanded={expandedSchool === 1}
+              onClick={() => {
+                setExpandedSchool(1);
+                setShowDetails(true);
+              }}
+            />
+          </EducationScene>
+
+          <ExpandedView
+            show={showDetails}
+            school={expandedSchool !== null ? schools[expandedSchool] : null}
+            onClose={() => {
+              setShowDetails(false);
+              setExpandedSchool(null);
+            }}
+          />
+        </div>
+      ) : (
+        <div className="space-y-8">
+          {schools.map((school, index) => (
+            <EducationItem key={index} school={school} />
+          ))}
+        </div>
+      )}
+    </>
+  );
+
   return (
-    <div className="relative w-full h-screen bg-[#001018]">
-      <motion.h1
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center absolute w-full top-10 text-5xl font-bold text-red-500 z-10"
+    <div className="relative w-full bg-[#001018]">
+      <DropdownSection 
+        title="Education" 
+        extraButton={ViewToggleButton}
       >
-        Education
-      </motion.h1>
-
-
-      <EducationScene>
-        <EducationCard3D
-          position={[-2, 0, 0]}
-          school={schools.berkeley}
-          isExpanded={expandedSchool === 'berkeley'}
-          onClick={() => {
-            setExpandedSchool('berkeley');
-            setShowDetails(true);
-          }}
-        />
-        <EducationCard3D
-          position={[2, 0, 0]}
-          school={schools.bcc}
-          isExpanded={expandedSchool === 'bcc'}
-          onClick={() => {
-            setExpandedSchool('bcc');
-            setShowDetails(true);
-          }}
-        />
-      </EducationScene>
-
-      <ExpandedView
-        show={showDetails}
-        school={expandedSchool ? schools[expandedSchool] : null}
-        onClose={() => {
-          setShowDetails(false);
-          setExpandedSchool(null);
-        }}
-      />
+        {educationContent}
+      </DropdownSection>
     </div>
   );
 }

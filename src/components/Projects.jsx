@@ -1,6 +1,7 @@
 // Projects.jsx
+import React from 'react';
+import DropdownSection from './DropdownSection';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 import AnimatedPolygons from './AnimatedPolygons';
 
 // Import project images
@@ -9,8 +10,6 @@ import project2Image from '/src/assets/images/projects/CoolSquare.jpg';
 import project3Image from '/src/assets/images/projects/CoolSquare.jpg';
 
 function Projects() {
-  const [hoveredProject, setHoveredProject] = useState(null);
-  
   const projects = [
     {
       title: "Project 1",
@@ -34,55 +33,47 @@ function Projects() {
       link: "https://project3.com"
     }
   ];
-
+  
   return (
-    <section className="min-h-screen bg-[#001018] relative overflow-hidden">
-      <AnimatedPolygons side="left" />
-      <AnimatedPolygons side="right" />
-      
-      <div className="max-w-7xl mx-auto px-8 py-20">
-        <motion.h2 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-6xl font-bold text-white mb-20 text-center"
-        >
-          Projects
-        </motion.h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10"> 
-          {projects.map((project, index) => ( 
+    <DropdownSection title="Projects">
+      <div className="relative">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
             <motion.div
               key={project.title}
-              className="relative aspect-[1/1] group cursor-pointer overflow-hidden rounded-xl h-[400px]"
+              className="relative group h-[400px] rounded overflow-hidden border-l-4 border-[#FF533D] bg-[#F5F5F5] bg-opacity-10 hover:bg-opacity-20 transition-all duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2 }}
-              onHoverStart={() => setHoveredProject(index)}
-              onHoverEnd={() => setHoveredProject(null)}
-              onClick={() => window.open(project.link, '_blank')}
             >
-              <div className="absolute inset-0">
+              {/* Front of card */}
+              <div className="absolute inset-0 w-full h-full transition-transform duration-500 group-hover:[transform:rotateY(180deg)] [transform-style:preserve-3d] backface-hidden">
                 <img 
-                  src={project.image} 
+                  src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               
-              <motion.div
-                className="absolute inset-0 p-8 flex flex-col justify-end text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                initial={false}
-                animate={hoveredProject === index ? { y: 0 } : { y: 20 }}
-              >
-                <h3 className="text-3xl font-bold mb-3">{project.title}</h3>
-                <p className="text-lg text-gray-200 mb-6">{project.description}</p>
-              </motion.div>
+              {/* Back of card */}
+              <div className="absolute inset-0 w-full h-full bg-[#001018] p-6 [transform:rotateY(-180deg)] transition-transform duration-500 group-hover:[transform:rotateY(0deg)] [transform-style:preserve-3d] backface-hidden">
+                <div className="flex flex-col h-full">
+                  <h3 className="text-[#FF533D] font-bold text-xl mb-2">{project.title}</h3>
+                  <p className="text-[#F5F5F5] text-sm mb-4">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.tech.map(tech => (
+                      <span key={tech} className="px-3 py-1 text-xs bg-[#F5F5F5] bg-opacity-10 text-[#A5997A] rounded">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </DropdownSection>
   );
 }
 

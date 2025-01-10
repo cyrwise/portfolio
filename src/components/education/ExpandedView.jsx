@@ -1,4 +1,3 @@
-// ExpandedView.jsx
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -55,11 +54,11 @@ export default function ExpandedView({ show, school, onClose }) {
                       className="text-zinc-300 flex items-center gap-4"
                     >
                       <img
-                        src={school.activityImages[i]}
-                        alt={activity}
+                        src={activity.logo}
+                        alt={activity.name}
                         className="w-8 h-8 rounded-full object-cover bg-gray-800"
                       />
-                      <span>{activity}</span>
+                      <span>{activity.name}</span>
                     </motion.li>
                   ))}
                 </ul>
