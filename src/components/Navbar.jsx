@@ -61,6 +61,7 @@ function Navbar() {
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Photography', path: '/photography'},
     { name: 'Contact', path: '/contact' },
     { name: 'Resume', path: '/resume' }
   ];

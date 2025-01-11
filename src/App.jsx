@@ -14,6 +14,7 @@ import CustomScrollbar from './components/CustomScrollbar';
 import GameView from './components/GameView';
 import Portfolio from './components/Portfolio';
 import MapViewer from './components/MapViewer';
+import Photography from "./components/Photography";
 
 import './App.css';
 
@@ -77,6 +78,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
         <Route path="/contact" element={<Contact />} />
         <Route path="/resume" element={<Resume />} />
         <Route path="/map" element={<MapViewer />} />
+        <Route path="/photography" element={<Photography />} />
       </Routes>
     </div>
   );
