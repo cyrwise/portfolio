@@ -1,10 +1,10 @@
-// tailwind.config.js
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
+  darkMode: 'class', // Enable dark mode
   theme: {
     extend: {
       colors: {
@@ -17,7 +17,18 @@ export default {
         'card-dark': '#0A192F',
         'card-darker': '#112240',
         'text-coral': '#FF6B6B',
-        'terminal-green': '#64ffda'
+        'terminal-green': '#64ffda',
+        // Add dark mode specific colors
+        dark: {
+          'bg': '#001018',
+          'text': '#ffffff',
+          'accent': '#FF533D'
+        },
+        light: {
+          'bg': '#ffffff',
+          'text': '#000000',
+          'accent': '#FF533D'
+        }
       },
       keyframes: {
         wave: {
@@ -45,6 +56,11 @@ export default {
         rotateChevron: {
           'from': { transform: 'rotate(0deg)' },
           'to': { transform: 'rotate(180deg)' }
+        },
+        // Add theme toggle animations
+        'theme-toggle': {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(0.9)' }
         }
       },
       animation: {
@@ -52,7 +68,8 @@ export default {
         'blink': 'blink 1s step-end infinite',
         'glow': 'glow 3s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
-        'chevron-spin': 'rotateChevron 0.3s ease-in-out forwards'
+        'chevron-spin': 'rotateChevron 0.3s ease-in-out forwards',
+        'theme-toggle': 'theme-toggle 0.3s ease-in-out'
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -61,6 +78,7 @@ export default {
       boxShadow: {
         'neon': '0 0 10px rgba(0, 229, 255, 0.7)',
         'card': '0 0 20px rgba(0, 0, 0, 0.3)',
+        'theme-toggle': '0 0 10px rgba(255, 83, 61, 0.5)'
       },
       typography: {
         'retro': {
@@ -119,6 +137,13 @@ export default {
         '.card-border': {
           border: '1px solid rgba(100, 255, 218, 0.3)',
         },
+        // Add theme toggle utilities
+        '.theme-toggle-shadow': {
+          boxShadow: '0 0 10px rgba(255, 83, 61, 0.5)',
+        },
+        '.dark-mode-transition': {
+          transition: 'background-color 0.3s ease-in-out, color 0.3s ease-in-out',
+        }
       };
       addUtilities(newUtilities);
     },

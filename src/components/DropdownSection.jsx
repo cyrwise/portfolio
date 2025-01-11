@@ -6,7 +6,8 @@ const DropdownSection = ({ title, children, extraButton }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <div className="bg-[#001018] p-8 max-w-4xl mx-auto relative">
+    // Adjust lg:max-w-[VALUE] for portfolio resolution
+    <div className="bg-[#001018] p-8 w-full max-w-[90%] lg:max-w-[1200px] mx-auto relative">
       <div className="flex justify-between items-center">
         <h2 
           className="text-[#FF533D] text-3xl font-bold cursor-pointer flex items-center gap-2 interactive group"

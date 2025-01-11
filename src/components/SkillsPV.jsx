@@ -34,11 +34,11 @@ function SkillsPV({ skills, viewMode }) {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-16 gap-y-12 p-8">
         {skills.map((skill, index) => (
           <motion.div
             key={skill.name}
-            className="flex flex-col items-center justify-center p-4 bg-[#0A192F] rounded-lg interactive"
+            className="flex flex-col items-center justify-center interactive"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}

@@ -53,6 +53,7 @@ function Skills({ setIsGameLocked }) {
       { name: "Java", icon: javaLogo },
       { name: "Rust", icon: rustLogo },
       { name: "Assembly", icon: asmLogo },
+      { name: "SQL", icon: asmLogo }
     ],
     "Machine Learning": [
       { name: "TensorFlow", icon: tensorflowLogo },

@@ -5,6 +5,7 @@ import { Points, PointMaterial } from '@react-three/drei'
 import * as random from 'maath/random'
 import { motion } from 'framer-motion'
 import AsciiPortrait from './AsciiPortrait'
+import { Link } from 'react-router-dom';
 import './Hero.css'
 
 function ParticleField() {
@@ -94,7 +95,48 @@ function Hero() {
               transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
             >|</motion.span>
           </motion.p>
+          
+          {/* Added Location Section */}
+          <motion.div 
+            className="location-container flex items-center gap-2 mt-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <i className="fas fa-map-marker-alt text-red-500 text-xl"></i>
+            <Link 
+              to="/map" 
+              className="text-gray-700 text-lg font-typewriter hover:text-[#FF533D] transition-colors"
+            >
+              San Francisco, CA
+            </Link>
+          </motion.div>
+
+          {/* Added Social Icons */}
+          <motion.div 
+            className="social-icons flex gap-4 mt-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+          >
+            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <i className="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <i className="fab fa-github text-xl"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <i className="fab fa-linkedin text-xl"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <i className="fas fa-rss text-xl"></i>
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
+              <i className="fab fa-instagram text-xl"></i>
+            </a>
+          </motion.div>
         </motion.div>
+        
         <motion.div 
           className="portrait-container"
           initial={{ opacity: 0, x: 20 }}
@@ -110,5 +152,6 @@ function Hero() {
     </section>
   )
 }
+
 
 export default Hero

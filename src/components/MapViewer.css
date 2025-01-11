@@ -1,0 +1,66 @@
+/* MapViewer.css */
+.map-tiles {
+    filter: sepia(100%) saturate(70%) hue-rotate(5deg);
+  }
+  
+  .leaflet-container {
+    background: #d5c8a5;
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .leaflet-popup-content {
+    font-family: 'MedievalSharp', cursive;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  .leaflet-popup-content h3 {
+    color: #FF533D;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+  
+  .leaflet-popup-content p {
+    color: #4a5568;
+  }
+  
+  .custom-marker {
+    color: #FF533D;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+  }
+  
+  .custom-marker i {
+    filter: drop-shadow(0 0 2px rgba(0,0,0,0.5));
+    font-size: 2.5rem;
+  }
+  
+  #map {
+    width: 100%;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px) {
+    #map {
+      aspect-ratio: 16/9;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #map {
+      aspect-ratio: 16/9;
+      transform: scale(0.8);
+      transform-origin: top left;
+    }
+  }
+  
+  .leaflet-control-attribution {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    background-color: rgba(255, 255, 255, 0.7) !important;
+  }
+  

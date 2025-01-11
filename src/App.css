@@ -21,6 +21,11 @@ body {
   padding: 0 1rem;
 }
 
+.font-medieval {
+  font-family: 'MedievalSharp', cursive;
+}
+
+
 /* Hide default cursor on all interactive elements */
 img, 
 canvas, 

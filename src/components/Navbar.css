@@ -1,67 +1,51 @@
 /* Navbar.css */
-.navbar-container {
-    @apply fixed w-full z-50 top-0;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.animate-wave {
+  animation: wave 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% {
+    d: path("M0,1 Q25,0 50,1 T100,1");
   }
-  
-  .navbar-content {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16;
+  50% {
+    d: path("M0,1 Q25,2 50,1 T100,1");
   }
-  
-  .logo {
-    @apply text-2xl font-bold;
-    background: linear-gradient(135deg, #64B5F6 0%, #22D3EE 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 20px rgba(100, 181, 246, 0.2);
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
-  
-  .nav-links {
-    @apply flex items-center space-x-8;
-  }
-  
-  .nav-link {
-    @apply relative py-2 px-1;
-  }
-  
-  .link-text {
-    @apply text-gray-300 hover:text-white transition-colors duration-300;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-  }
-  
-  .link-underline {
-    @apply absolute bottom-0 left-0 h-0.5 bg-blue-400;
-    width: 0;
-    transition: width 0.3s ease;
-  }
-  
-  .nav-link:hover .link-underline {
-    width: 100%;
-  }
-  
-  /* Hover effects */
-  .nav-link:hover .link-text {
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
-  }
-  
-  /* Responsive design */
-  @media (max-width: 640px) {
-    .nav-links {
-      @apply space-x-4;
-    }
-    
-    .link-text {
-      font-size: 0.875rem;
-    }
-  }
-  
-  /* Optional: Add this if you want to use dark mode */
-  @media (prefers-color-scheme: dark) {
-    .navbar-container {
-      background: rgba(13, 12, 34, 0.9);
-    }
-  }
-  
+}
+
+/* Ensure content doesn't shift when scrollbar appears */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Custom scrollbar for the mobile menu */
+.overflow-y-auto {
+  scrollbar-width: thin;
+  scrollbar-color: #FF533D #001018;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: #001018;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: #FF533D;
+  border-radius: 3px;
+}

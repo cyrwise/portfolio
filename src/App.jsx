@@ -13,6 +13,7 @@ import Resume from './components/Resume';
 import CustomScrollbar from './components/CustomScrollbar';
 import GameView from './components/GameView';
 import Portfolio from './components/Portfolio';
+import MapViewer from './components/MapViewer';
 
 import './App.css';
 
@@ -75,6 +76,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
         <Route path="/game" element={<GameView setIsGameLocked={setIsGameLocked} />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/resume" element={<Resume />} />
+        <Route path="/map" element={<MapViewer />} />
       </Routes>
     </div>
   );

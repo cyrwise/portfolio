@@ -13,6 +13,28 @@
   padding-top: 5rem;
 }
 
+.location-container {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+}
+
+.social-icons a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+
 .hero-content-wrapper {
   display: flex;
   flex-direction: row;
@@ -182,3 +204,4 @@
     width: 200px;
   }
 }
+
