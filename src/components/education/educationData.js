@@ -14,8 +14,8 @@ export const schools = [
   {
     name: "University of California, Berkeley",
     logo: ucbLogo,
-    role: "Electrical Engineering & Computer Science Visitor",
-    period: "2023 - present",
+    role: "B.S. Electrical Engineering & Computer Sciences, Minor in Data Science",
+    period: "2023 - 2027",
     courses: [
       "EECS 16A: Designing Information Devices and Systems I",
       "EECS 16B: Designing Information Devices and Systems II",
