@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
 
 function Navbar() {
   const location = useLocation();
@@ -59,8 +58,8 @@ function Navbar() {
   }, [isOpen]);
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Portfolio', path: '/portfolio' },
+    // { name: 'Home', path: '/' },
+    { name: 'Portfolio', path: '/' },
     { name: 'Photography', path: '/photography'},
     { name: 'Contact', path: '/contact' },
     { name: 'Resume', path: '/resume' }
@@ -79,7 +78,8 @@ function Navbar() {
             <span className="animate-blink text-[#FF533D]">_</span>
           </Link>
           
-          <div className="hidden sm:flex items-center space-x-8 ml-auto">
+          {/* CHANGED: sm:flex is now md:flex */}
+          <div className="hidden md:flex items-center space-x-8 ml-auto">
             {navItems.map(({ name, path }) => (
               <Link
                 key={name}
@@ -104,13 +104,14 @@ function Navbar() {
                 </span>
               </Link>
             ))}
-            <ThemeToggle />
+            {/* ThemeToggle removed from here */}
           </div>
 
+          {/* CHANGED: sm:hidden is now md:hidden */}
           <motion.button
             ref={buttonRef}
             onClick={() => setIsOpen(!isOpen)}
-            className="sm:hidden flex-shrink-0 p-2 z-50"
+            className="md:hidden flex-shrink-0 p-2 z-50"
             animate={isOpen ? "open" : "closed"}
           >
             <div className="w-6 flex flex-col gap-1.5">
@@ -140,6 +141,7 @@ function Navbar() {
         </div>
       </div>
 
+      {/* CHANGED: sm:hidden is now md:hidden */}
       <motion.div 
         ref={menuRef}
         initial={{ x: '100%' }}
@@ -151,7 +153,7 @@ function Navbar() {
           stiffness: 100,
           damping: 20
         }}
-        className="fixed top-16 right-0 w-64 h-[calc(100vh-4rem)] bg-[#001018]/95 sm:hidden overflow-y-auto"
+        className="fixed top-16 right-0 w-64 h-[calc(100vh-4rem)] bg-[#001018]/95 md:hidden overflow-y-auto"
       >
         <div className="flex flex-col space-y-4 p-6">
           {navItems.map(({ name, path }) => (
@@ -172,7 +174,7 @@ function Navbar() {
               </Link>
             </motion.div>
           ))}
-          <ThemeToggle />
+          {/* ThemeToggle removed from here */}
         </div>
       </motion.div>
     </motion.nav>

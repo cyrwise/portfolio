@@ -1,10 +1,12 @@
 // Projects.jsx
 import React from 'react';
+import { useState, useEffect } from 'react';
 import DropdownSection from './DropdownSection';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import PhotographyLoadingScreen from './PhotographyLoadingScreen';
 
 // Import project images
 import project1Image from '/src/assets/images/projects/CoolSquare.jpg';
