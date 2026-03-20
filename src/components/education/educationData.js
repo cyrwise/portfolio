@@ -17,10 +17,13 @@ export const schools = [
     role: "B.S. Electrical Engineering & Computer Sciences, Minor in Data Science",
     period: "2023 - 2027",
     courses: [
-      "EECS 16A: Designing Information Devices and Systems I",
+      "CS 170: Efficient Algorithms and Intractable Problems",
+      "CS 186: Introduction to Database Systems",
+      "COGSCI 131: Computational Models of Cognition",
+      "CS 70: Discrete Mathematics and Probability Theory",
       "EECS 16B: Designing Information Devices and Systems II",
-      "ENERES C100: Energy and Society",
-      "CS 61A (Laney): Structure and Interpretation of Computer Programs"
+      "EECS 16A: Designing Information Devices and Systems I",
+
     ],
     activities: [
       { name: "Anre AI Berkeley", logo: anreLogo },
@@ -35,11 +38,12 @@ export const schools = [
     role: "Associate's Degree in Physics, Math, CS, Data Science",
     period: "2022 - 2025",
     courses: [
-      "CIS 25: Object Orientated Programming C++",
-      "CIS 27: Data Structures & Algorithms",
-      "CIS 36A: Java Programming",
+      "MATH 118: Foundations in Data Science",
+      "CIS 27 & CS 110C: Data Structures & Algorithms in Java & C++",
+      "CIS 36A & 36B: Java Programming Language I & II",
       "COMSC 260: Assembly Programming/Computer Organization",
-      "MATH 3E: Linear Algebra"
+      "MATH 3E: Linear Algebra",
+      "MATH 3F: Differential Equations"
     ],
     activities: [
       { name: "Berkeley Applied Mathematics", logo: bamLogo },

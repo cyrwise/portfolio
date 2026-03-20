@@ -24,14 +24,14 @@ export const experienceData = [
     logo: berkeleyLogo,
     role: "Head GSI, Reader",
     date: "May 2025 - Dec 2025",
-    description: "Participating in NASA's NCAS, working on space-related projects and research."
+    description: "Managed course logistics, led discussions, and designed assessments for over 100 students in ENERES C100."
   },
   {
     company: "San Francisco State University",
     logo: sfsuLogo,
     role: "Machine Learning Researcher",
     date: "May 2025 - Sep 2025",
-    description: "Participating in NASA's NCAS, working on space-related projects and research."
+    description: "Trained a PyTorch StructGNN model that achieved 99.2% accuracy in predicting building forces across thousands of generated structures. Also engineered a SAP2000 API pipeline for automated structure generation and presented findings to civil engineering researchers."
   },
   {
     company: "NASA",
@@ -52,7 +52,7 @@ export const experienceData = [
     logo: baywestLogo,
     role: "Software Engineering Intern",
     date: "Jun 2024 - Aug 2024",
-    description: "Worked on various software development projects, gaining hands-on experience in full-stack development and consulting."
+    description: "Modernized digital infrastructure by building out the company's web presence and deploying AI-enhanced backend systems. Optimized internal logistics and data flow to significantly improve operational efficiency."
   },
   {
     company: "Stanford Center for Clinical Research",
