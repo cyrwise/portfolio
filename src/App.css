@@ -25,21 +25,6 @@ body {
   font-family: 'MedievalSharp', cursive;
 }
 
-
-/* Hide default cursor on all interactive elements */
-img, 
-canvas, 
-.three-canvas,
-.interactive,
-.model-viewer {
-  cursor: none !important;
-}
-
-/* Ensure body also has no cursor */
-body {
-  cursor: none !important;
-}
-
 * {
   scrollbar-width: thin;
   scrollbar-color: #0F1626 transparent;

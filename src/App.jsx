@@ -1,10 +1,10 @@
 // App.jsx
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import AnimatedCursor from "react-animated-cursor";
+// import AnimatedCursor from "react-animated-cursor";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Experience from './components/Experience';
+import Experience from './components/experience/Experience';
 import Education from './components/education/Education'
 import Projects from './components/Projects';
 import Skills from './components/Skills';
@@ -44,7 +44,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
 
   return (
     <div className={`min-h-screen ${isGameRoute ? 'bg-[#000000]' : 'bg-[#001018]'}`}>
-      {!isGameRoute && (
+      {/* {!isGameRoute && (
         <AnimatedCursor
           innerSize={8}
           outerSize={35}
@@ -67,7 +67,7 @@ function AppContent({ isGameLocked, setIsGameLocked }) {
             '.model-viewer'
           ]}
         />
-      )}
+      )} */}
       {!isGameRoute && <Navbar />}
       <Routes>
         <Route path="/" element={<Portfolio setIsGameLocked={setIsGameLocked} />} />

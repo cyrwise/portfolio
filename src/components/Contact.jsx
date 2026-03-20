@@ -109,8 +109,8 @@ export default function Contact() {
     { method: 'Email', icon: faEnvelope, link: 'mailto:cyr@berkeley.edu' },
     { method: 'LinkedIn', icon: faLinkedin, link: 'https://linkedin.com/in/cyruswise/' },
     { method: 'GitHub', icon: faGithub, link: 'https://github.com/cyrwise' },
-    { method: 'X', icon: xLogo, link: 'https://twitter.com' },
-    { method: 'YouTube', icon: faYoutube, link: 'https://youtube.com/@yourchannel' },
+    { method: 'X', icon: xLogo, link: 'https://x.com/cyruwise' },
+    { method: 'YouTube', icon: faYoutube, link: 'https://youtube.com/@cyrwise' },
   ];
 
   // Update window width on resize

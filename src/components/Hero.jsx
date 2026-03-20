@@ -8,6 +8,13 @@ import AsciiPortrait from './AsciiPortrait'
 import { Link } from 'react-router-dom';
 import './Hero.css'
 
+// Font Awesome & Custom Icons
+import xLogo from '/src/assets/images/xlogo.svg';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// ADDED faMapMarkerAlt right here!
+import { faEnvelope, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'; 
+import { faLinkedin, faGithub, faYoutube } from '@fortawesome/free-brands-svg-icons';
+
 function ParticleField() {
   const points = useRef()
   const [sphere] = useState(() => 
@@ -96,14 +103,14 @@ function Hero() {
             >|</motion.span>
           </motion.p>
           
-          {/* Added Location Section */}
+          {/* FIXED Location Section: Upgraded to FontAwesomeIcon and themed Coral */}
           <motion.div 
             className="location-container flex items-center gap-2 mt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
           >
-            <i className="fas fa-map-marker-alt text-red-500 text-xl"></i>
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="text-[#FF533D] text-xl" />
             <Link 
               to="/map" 
               className="text-gray-700 text-lg font-typewriter hover:text-[#FF533D] transition-colors"
@@ -112,27 +119,46 @@ function Hero() {
             </Link>
           </motion.div>
 
-          {/* Added Social Icons */}
+          {/* Social Icons */}
           <motion.div 
-            className="social-icons flex gap-4 mt-6"
+            className="social-icons flex gap-4 mt-6 items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
-              <i className="fab fa-twitter text-xl"></i>
+            <a href="mailto:cyr@berkeley.edu" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#FF533D] transition-colors duration-300">
+              <FontAwesomeIcon icon={faEnvelope} className="text-xl" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
-              <i className="fab fa-github text-xl"></i>
+            <a href="https://linkedin.com/in/cyruswise/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#FF533D] transition-colors duration-300">
+              <FontAwesomeIcon icon={faLinkedin} className="text-xl" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
-              <i className="fab fa-linkedin text-xl"></i>
+            <a href="https://github.com/cyrwise" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#FF533D] transition-colors duration-300">
+              <FontAwesomeIcon icon={faGithub} className="text-xl" />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
-              <i className="fas fa-rss text-xl"></i>
+            
+            <a 
+              href="https://x.com/cyruwise" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="group flex items-center transition-colors duration-300"
+            >
+              <span 
+                className="block w-[20px] h-[20px] bg-gray-600 group-hover:bg-[#FF533D] transition-colors duration-300"
+                style={{
+                  maskImage: 'url(/src/assets/images/xlogo.svg)',
+                  WebkitMaskImage: 'url(/src/assets/images/xlogo.svg)', 
+                  maskSize: 'contain',
+                  WebkitMaskSize: 'contain',
+                  maskRepeat: 'no-repeat',
+                  WebkitMaskRepeat: 'no-repeat',
+                  maskPosition: 'center',
+                  WebkitMaskPosition: 'center'
+                }}
+              />
             </a>
-            <a href="#" className="text-gray-600 hover:text-gray-900 transition-colors">
-              <i className="fab fa-instagram text-xl"></i>
+            
+            <a href="https://youtube.com/@cyrwise" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#FF533D] transition-colors duration-300">
+              <FontAwesomeIcon icon={faYoutube} className="text-xl" />
             </a>
           </motion.div>
         </motion.div>
@@ -152,6 +178,5 @@ function Hero() {
     </section>
   )
 }
-
 
 export default Hero
