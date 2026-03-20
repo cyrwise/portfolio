@@ -1,7 +1,7 @@
 // Portfolio.jsx
 import React from 'react';
 import Hero from './Hero';
-import Experience from './Experience';
+import Experience from "./experience/Experience";
 import Education from './education/Education';
 import Projects from './Projects';
 import Skills from './Skills';

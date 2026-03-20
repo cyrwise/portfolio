@@ -72,9 +72,5 @@ body {
   img, .card-container img {
     pointer-events: none;
   }
-  
-  .card-container img,
-  .card-container .absolute {
-    cursor: none !important;
-  }
+
   
