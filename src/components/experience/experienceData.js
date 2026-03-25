@@ -31,7 +31,7 @@ export const experienceData = [
     logo: sfsuLogo,
     role: "Machine Learning Researcher",
     date: "May 2025 - Sep 2025",
-    description: "Trained a PyTorch StructGNN model that achieved 99.2% accuracy in predicting building forces across thousands of generated structures. Also engineered a SAP2000 API pipeline for automated structure generation and presented findings to civil engineering researchers."
+    description: "Trained a PyTorch StructGNN model that achieved 99.2% accuracy in predicting building forces across thousands of generated structures." // Also engineered a SAP2000 API pipeline for automated structure generation and presented findings to civil engineering researchers.
   },
   {
     company: "NASA",
@@ -52,7 +52,7 @@ export const experienceData = [
     logo: baywestLogo,
     role: "Software Engineering Intern",
     date: "Jun 2024 - Aug 2024",
-    description: "Modernized digital infrastructure by building out the company's web presence and deploying AI-enhanced backend systems. Optimized internal logistics and data flow to significantly improve operational efficiency."
+    description: "Modernized digital infrastructure by building out the company's web presence and deploying AI-enhanced backend systems." // Optimized internal logistics and data flow to significantly improve operational efficiency.
   },
   {
     company: "Stanford Center for Clinical Research",
