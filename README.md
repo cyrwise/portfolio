@@ -7,7 +7,7 @@ This repository contains an interactive React + Vite portfolio designed to showc
 
 ## Features
 * **Playable Rubik's Cube**: The main hero page features a fully functional, 3D interactive Rubik's Cube.
-* **Immersive Mini-Game**: Navigate to the skills section and press the "Game View" button to launch a playable hidden game.
+* **Immersive Space-Universe Game**: Navigate to the skills section and press the "Game View" button to launch a playable open-world space game, where each one of my tech skills is displayed as a planet. Features a solar system with three.js logic. Also found at yourlocalhost:####/game.
 * **Yu-Gi-Oh Contact Cards**: The contact section utilizes a custom Yu-Gi-Oh card layout, complete with detailed animations and dynamic shuffling that recalculates based on window resize events.
 
 ## Tech Stack
