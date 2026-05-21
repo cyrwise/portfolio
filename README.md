@@ -21,3 +21,21 @@ To run this project locally:
 1. Clone the repository:
    ```bash
    git clone [https://github.com/cyrwise/portfolio.git](https://github.com/cyrwise/portfolio.git)
+   ```
+
+2. Navigate into the directory:
+   ```bash
+   cd portfolio
+   ```
+
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+*No open-source license is provided for this repository.*
