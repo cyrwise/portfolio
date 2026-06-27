@@ -1,5 +1,7 @@
 # Cyrus Wise - Interactive 3D Portfolio 🎲
 
+Link: https://portfolio-9o0.pages.dev/
+
 *Note: While this was a highly fun and immersive build, the UI was intentionally complex and experimental. I have since migrated my primary portfolio to a cleaner, minimalist design for better navigability. You can view the current live version at [cyruswise.com](https://cyruswise.com) and its source code [here](https://github.com/cyrwise/minimalist-portfolio).*
 
 ## Overview
